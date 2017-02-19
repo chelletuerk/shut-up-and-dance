@@ -3,10 +3,6 @@ import { Link } from 'react-router'
 
 export default class App extends Component {
 
-  componentDidMount() {
-    this.props.fetchArtist()
-  }
-
   render() {
     return (
       <div>

@@ -6,6 +6,15 @@ export const storeArtist = (query, payload) => {
   }
 }
 
+export const signIn = (email, password, user) => {
+  return {
+    type: 'SIGN_IN',
+    email,
+    password,
+    user,
+  }
+}
+
  export const fetchArtist = (query) => {
   const baseUrl = 'https://api.themoviedb.org/3/'
   const search = `search/movie?api_key=5cfdb8d0915ecb8d60d107cef74a22e8&query=${query}`
