@@ -16,8 +16,8 @@ export const signIn = (email, password, user) => {
 }
 
  export const fetchArtist = (query) => {
-  const baseUrl = 'https://api.themoviedb.org/3/'
-  const search = `search/movie?api_key=5cfdb8d0915ecb8d60d107cef74a22e8&query=${query}`
+  const baseUrl = 'https://api.spotify.com/'
+  const search = `v1/search?q=%20artist:${query}&type=album`
   return (dispatch) => {
     fetch(`${baseUrl}${search}`)
       .then(response => response.json())
