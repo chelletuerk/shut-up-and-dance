@@ -35,6 +35,7 @@ constructor(props) {
     return (
       <div className='search-input'>
         <input
+          className='search-input'
           placeholder='search artists'
           onChange={this.handleSearch}
           value={this.state.draftMessage}

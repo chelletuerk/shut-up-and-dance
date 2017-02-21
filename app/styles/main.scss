@@ -1,7 +1,52 @@
+@import url('https://fonts.googleapis.com/css?family=Audiowide|Julius+Sans+One');
+
 body {
   background-color: black;
 }
 
 h1 {
   color: red;
+  text-align: center;
+  font-family: 'Audiowide', cursive;
+  font-size: 70px;
+}
+
+.app-div {
+  text-decoration: none;
+}
+
+img {
+    width: 18%;
+    margin: 10px;
+    border-radius: 5px;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+::-webkit-input-placeholder {
+  font-family: 'Julius Sans One', sans-serif;
+  font-size: 35px;
+}
+
+img:hover {
+  -webkit-transform:scale(1.2);
+  transform:scale(1.2);
+}
+
+ul {
+  margin-left: 45px;
+}
+
+
+li {
+  display: initial;
+}
+
+.search-input {
+height: 40px;
+    width: 60%;
+    text-align: center;
+    margin-left: 15%;
+    font-family: 'Julius Sans One', sans-serif;
+    font-size: 35px;
 }
