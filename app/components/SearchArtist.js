@@ -17,14 +17,31 @@ constructor(props) {
 
   }
 
+  searchArtists() {
+      if (this.props.artists.searchedArtists) {
+        return this.props.artists.searchedArtists.map((artist, i) => {
+          return (
+              artist.images[0] === null) ? null : <li
+                className='card'
+                key={i}>
+                  <img src={`${artist.images[0].url}`} />
+                </li>
+        })
+      }
+    }
+
   render() {
+    const { fetchArtist, artists } = this.props
     return (
-      <div>
+      <div className='search-input'>
         <input
           placeholder='search artists'
           onChange={this.handleSearch}
           value={this.state.draftMessage}
         />
+        <ul>
+          {this.searchArtists()}
+        </ul>
       </div>
     )
   }
