@@ -17,15 +17,21 @@ export const displaySearchedArtist = (query, payload) => {
 
  export const fetchArtist = (query) => {
   const baseUrl = 'https://api.spotify.com/'
-  const search = `v1/search?q=%20artist:${query}&type=album`
-  // const search = `v1/audio-features/6OFysn48qBOIID3CWcxzfJ/1ae09ed5e49048418adb956e9bc202a4`
+  // const search = `v1/search?q=%20artist:${query}&type=album`
+  const search = `v1/audio-features/06AKEBrKUckW0KREUWRnvT`
+console.log('mike');
   return (dispatch) => {
-    fetch(`${baseUrl}${search}`)
-      .then(response => response.json())
+    const headers = {'Authorization': 'Bearer ' + window.spotifyAccessToken }
+    fetch(`${baseUrl}${search}`, {headers})
+      .then(response => response)
       .then((json) => {
+        console.log('hey', json);
         dispatch(displaySearchedArtist(query, json))
-        console.log(json);
-        // debugger
+        // const artistId = json.body.artistId
+        // fetch(`${baseUrl}${artistId}`)
+        //   .then(=>
+        //     dispatch(displaySearchedArtist(query, json))
+        //   )
       })
       .catch(err => 'err')
   }
