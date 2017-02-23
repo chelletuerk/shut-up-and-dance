@@ -1,7 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Audiowide|Julius+Sans+One');
 
+html {
+  background: url('./images/citySkyline.png') no-repeat center center fixed;
+
+  -webkit-background-size: cover;
+  background-size: cover;
+}
 body {
-  background-color: black;
+  background-color: transparent;
+  // background: url('images/citySkyline.png');
 }
 
 h1 {
@@ -77,14 +84,14 @@ li {
 }
 
 .search-input {
-  height: 40px;
+  height: 60px;
   width: 60%;
   text-align: center;
   margin-left: 15%;
   font-family: 'Julius Sans One', sans-serif;
   font-size: 35px;
   border-radius: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 // a {

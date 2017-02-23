@@ -85,11 +85,11 @@
 	
 	__webpack_require__(278);
 	
-	var _artistReducer = __webpack_require__(282);
+	var _artistReducer = __webpack_require__(283);
 	
 	var _artistReducer2 = _interopRequireDefault(_artistReducer);
 	
-	var _userReducer = __webpack_require__(283);
+	var _userReducer = __webpack_require__(284);
 	
 	var _userReducer2 = _interopRequireDefault(_userReducer);
 	
@@ -29138,7 +29138,7 @@
 	var content = __webpack_require__(279);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(281)(content, {});
+	var update = __webpack_require__(282)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -29163,7 +29163,7 @@
 	exports.push([module.id, "@import url(https://fonts.googleapis.com/css?family=Audiowide|Julius+Sans+One);", ""]);
 	
 	// module
-	exports.push([module.id, "body {\n  background-color: black; }\n\nh1 {\n  color: red;\n  text-align: center;\n  font-family: 'Audiowide', cursive;\n  font-size: 70px; }\n\n.app-div {\n  text-decoration: none; }\n\nimg {\n  width: 18%;\n  margin: 15px;\n  border-radius: 5px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 9;\n  text-align: center;\n  border: 1px solid blue; }\n\n::-webkit-input-placeholder {\n  font-family: 'Julius Sans One', sans-serif;\n  font-size: 35px; }\n\nimg:hover {\n  -webkit-transform: scale(1.3);\n  transform: scale(1.3); }\n\nul {\n  margin-left: 45px; }\n\nli {\n  display: initial; }\n\n.submitButton {\n  background: white;\n  margin-left: 14%;\n  border-radius: 5px; }\n\n.playBtn {\n  background-color: Transparent;\n  background-repeat: no-repeat;\n  border: none;\n  cursor: pointer;\n  overflow: hidden;\n  color: white;\n  margin: 49px 10px 0px -92px;\n  height: 43px;\n  position: absolute;\n  z-index: 10; }\n\n.card {\n  position: relative; }\n\n.search-input {\n  height: 40px;\n  width: 60%;\n  text-align: center;\n  margin-left: 15%;\n  font-family: 'Julius Sans One', sans-serif;\n  font-size: 35px;\n  border-radius: 5px;\n  margin-bottom: 10px; }\n", ""]);
+	exports.push([module.id, "html {\n  background: url(" + __webpack_require__(281) + ") no-repeat center center fixed;\n  -webkit-background-size: cover;\n  background-size: cover; }\n\nbody {\n  background-color: transparent; }\n\nh1 {\n  color: red;\n  text-align: center;\n  font-family: 'Audiowide', cursive;\n  font-size: 70px; }\n\n.app-div {\n  text-decoration: none; }\n\nimg {\n  width: 18%;\n  margin: 15px;\n  border-radius: 5px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 9;\n  text-align: center;\n  border: 1px solid blue; }\n\n::-webkit-input-placeholder {\n  font-family: 'Julius Sans One', sans-serif;\n  font-size: 35px; }\n\nimg:hover {\n  -webkit-transform: scale(1.3);\n  transform: scale(1.3); }\n\nul {\n  margin-left: 45px; }\n\nli {\n  display: initial; }\n\n.submitButton {\n  background: white;\n  margin-left: 14%;\n  border-radius: 5px; }\n\n.playBtn {\n  background-color: Transparent;\n  background-repeat: no-repeat;\n  border: none;\n  cursor: pointer;\n  overflow: hidden;\n  color: white;\n  margin: 49px 10px 0px -92px;\n  height: 43px;\n  position: absolute;\n  z-index: 10; }\n\n.card {\n  position: relative; }\n\n.search-input {\n  height: 60px;\n  width: 60%;\n  text-align: center;\n  margin-left: 15%;\n  font-family: 'Julius Sans One', sans-serif;\n  font-size: 35px;\n  border-radius: 5px;\n  margin-bottom: 20px; }\n", ""]);
 	
 	// exports
 
@@ -29226,6 +29226,12 @@
 
 /***/ },
 /* 281 */
+/***/ function(module, exports) {
+
+	module.exports = "data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxMTEhUSEhMVFRUVFhUVFxcXFRgVFRUVFRUWFxUVGBUYHSggGBolHRUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGhAQGy0lHyUtLS0tLS0tLS0tLS0tMC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAJEBXAMBIgACEQEDEQH/xAAbAAACAwEBAQAAAAAAAAAAAAAABAIDBQEGB//EAD0QAAIBAgMEBggDBwUBAAAAAAABAgMRBCExEkFRcQUTYZGhwRQiUoGx0eHwMkJyBmKCkqKy8RUjU8LSJP/EABkBAAMBAQEAAAAAAAAAAAAAAAABAwIEBf/EACoRAAICAgECBQIHAAAAAAAAAAABAhEDEiEiMQQTQVGRoeEyM2GBwdHw/9oADAMBAAIRAxEAPwD4pAapC0BqkbQxqmhqmhakOU0bRpFkYlsYhAtiuBtG0RUSxI7sslsFEjdEYxQRjwJJFqhlkOhkIvidXI7YlsjoKIRe4I00SaJRZtGdSt0swceD5jOzv8LHFDsGx6i1OHwJRpl6pltKmYbGoC3UkVRzNP0c76K8mZbKLGZ0sOdjQNSGGvlx37jkaVid0U8ozpUTkaZqLC33MjVw1gUhvEZmxY5KHA1I4VHY4RcWaTJvEZfU8AVHI1fRVz5C8qRqkLShB0ypwNB0lbt4BGkloCRlwFqdPK7OO2dsxmpAg6f1+Qa2PWiqnHM7Uq8CxxSd/AXqa3HoJ8FU5tsrkiw5JCoyUy5FTRfJHHEZmihxIuGRe4kJITFQrUiZ+IRp1kZ2JRCRNmZUKmXVShkWYL4DdJCtMbpGkNDVJDlNC1Icom0bSLqaLoojTiXxplIlEjiOtFipFkaTeRVFEimKJvkNQwTtqdVDZ3e83RrRiiiCQ9HD33WJPC30sGo9BFRLKVG+i8B1YNgsPJfMKGoFFGiT6rn8+ZdCIxGlYTZuOMTjSsXxw7zsvJl0ol1Kl3EXIrHGLwg7F0rvXPIajT7C9USUpsvHGJRR2OHzHoYfsGoYR8CLmVWNGTLD7+O45KjlobbwT3K1iEsO1uBTDRGXDDJrl2EXh1uNWEGtx2pFcLF4yMPGjIWDy4e4Vr0M8vtG1PgK1qatv5FbJyxmROgiPV5aeA61lYpmNMk4IW6pb/huKcRHO3kaEYvVZitVZ6lV2JygKyguPzKag01fJFbogTcRSVN8CLgO9W/vMpaFRlxFtjvK5RGXE5KmKjNC1mQlEacSmpExITQnWMzEo1K7S1MnF1FnYhIhIzqxQy2o8ypkmTGIDdIVpjdE0jaHKI7SQpRHaKNo2hiBfBsrpoujE2iqRdCZarsqii+DKplootjWaRKlNlaZdSiUstGI7DBSdN1E/VTSavndpvuyZTG3A2cNH/5pfrj/AGzMiaJYsjlKSfo/4LyxqifX5eRGlfn7yMORYqm4u2Tok6Sf+S6lSX04laZZHiSkzaRPqt1siyFA7CrxGaJCRWKR2lh7j+Hwu47g6W00lmz0+A6P2FdwbfKLS5esRkzOXPHEuTPwfQsnm1ZduvuRs0eh6aWe0/AuUn7L7o/+iW0/Zf8AR8ydHmZPFZJetEX0VS4PvYpiehI29RtdjXmkO7T9l/0fMLvg/wCgKJxz5I87HmsZ0dOF8nbjnbxMyrTtqe2nnu/s8zC6W6PsnKKy35xfw3Gk6O/B4vZ6yPOTgrlVeNlxGJ5ClWZeEjsaFZxvqherBDlSQrULJk5IVk924rnSWqLyEm+BtMm0VRpZFOykXybITu0bMalMs9CmdMYUbEZoRlxF+qCUS2XDMqcRWZcCmojLx+NUfVjnLwXzH6+IipbLytZvNLK/bvFaVf1tmcYyeeTblZLe5PTkTkzgz5mpaxRmSbavKUU32K9t2mYrjY5vNZ9hq1K6/NHY5tSb5JrxM/GJXvwItWc6t8mRVVmyhjFdC7RFmhmmOUROmO0TaKIdoj1FCVEeom0UQ1TQ1GIvTGIM2iyJOolq0rkoVoe0vvtEukX+HS+fkKKplmvrqWjFUDyuLo9DBEnVUVeWl7aGd0RO7a4bs7a/5G+k3aHF3XbxCuaOiM7jsh2HTyjB09luLcXtrdZP8v8AEX05KS1TPLOTs75rK713LdwzZp9Cz9aSyTt8hKCjbQQzyk6ZsRpL6k9laW95BTZdRd2Gx0KiPo7Oqg0O7dluIyrLgjDsfBTCL4DFJMj11tC+niewjLY2mjf6Dwks57CktFeWznxNnZl/xw/nMHC4rDqK2lO++2l+8t9Nw3Cf37yPJ5+VTlJun8P+zZ2Jf8cP5g2H/wAdP+YxvTcN7M/v3kvTMP7M/v3iJ+XL2fx9zYs/Ypd4WfsUu8x/TsP7Mvv3nfTsP7Evv+IdC8uXs/j7ms4v2aJGUX7NA8N0p+0yjJ9XCOzna+027O13mT6D/aWlV2lWo5xtnByzvfWLllpxN+VKro35T/X4+470rFU5NNrjlms+0x54jghnpvF0pNdVCUeN878Gs2ZHWFoQ4O+MnqrGJSuV7JXGtyJKsUoLJTjuK9gHUucnMdibRKVNbLfal4P5FDjbQseIVtj8z9b3K68yu5qzKK2iJNkbiAqkiEoksTU2YOXBNnnnXk83n+ptruXyKQhsRyTUR7GYba2mrX2Y23p2csn3lahCMnNtLaSy4b3l3dwviK7i2k9lNK6SW+K4cxdwk87PdnZ/HkKWGmcT1vYnjIwlz5MRxiGMbL15et+Z8eItXeS5HPNJdjHcyKpQy+tqUMhPuSGKY7REqY7RBG0O0R+iI0R6ijaKocpjEELUxqmasohXpL8ul8/ISVTLNfXUe6Uf4dN+vuElUds1y7dTog+Cc/xGj0PL1msk7Z9470m/U45rt4iPREvWayvbzHOk5ep71255ib5OiH5TMvadmnmsrvdot3DM0uh5+s07afIy3Udmnmss9Voty3Zmh0RVe01bd8hyfBPE+pG2mXQFVNklUZGz0B6LRfCcbbjMU2KrFLrbXd/w6e/W/kCjfqKUqo3+sh2EliIcUZLZDaJuBqz12F6ZppKLislr9orxn7SwgvwR1svux5ujidnIzP2jxV4w/V5GIYE50yM8GNJyr6ns8N+1EW9lwjfTLId/1xewu/6Hzzo2bVa79p+Z6T0sxkxKMqXJmOHHJXX1N/8A1xewu/6A+nV7C7/oYPpZl9M9ITjbZbWT0Mxx2+wPBjStr6kelK8Glpv+JP8AZLpTqZVWop7WxvtptfM89jK7cI/xd98/IZ/ZrE7LqX37H/Y78mOoNdxqSyOn2PW9I9Iuvm9mOynlfW/A8viOmoxdkm7PfloX9IYl7M3vs7d1keasnFt6/O70HhxJLkMmRQ6YHp8L0jGVk8nLTenrv9w7tI8rRqpSpNpZcNXdtZnoNpDnBcUGLJsrZHE4iWairWtZ5Z3aWSb0zF5Rj1e1K03HO6ad+d1osyidWnCavK7tJaXVpTvrus0M1amzLa3Si79trW8G+4zHE3dnI4zm25NUULFx207rJtStFK6y3Np8Ozy0LnkatRvR6tu3Pdfhp3m90ZVbpq+71eOnbvNyx6or4Xp6R4zcZiJqbSlNRssltbOi4RaY9tHlel8ZLrp2tk0vwrckuBmLM+OTcFXubVabdCV76PW6fikef0tn9/du80+jq7lh56XTa0S3J7uZlb8vLXcXxMm29Y33osxk7Tyb0j/ZEgp/7ct/rR+EzmMfre6P9qOJ/wC3L9UfhMrJ8EvQqryzefxKatbIlW1fNi9XTv8AI4slCYpXeZQy2qypnLIkM0xykxFMZoyyYJGrNCjVRoYedzFpvQbw9Zx5X8CiibjJ2bdNjEJGbhMTtbreJVg8Qusk9zGky6kh7pGX4dN+q5CfWPeuXiRq4hyvfc3a+5OyIdby87lkq4JTfUanRNT1muzzLMfjYtbK1vw1tcV6Lqes+XmLT/Hu1lrzYLkqp1jLHUdmtVlnqtFuW7Mf6IqPaa7PkZkpvNa8d6HOja9pO/D3chNmMT61Zu7RJSFesOyqpEz1OBrrVxMRV3tbe+/0DGYvhv1+RSprafP/ALI1E5MuW3SN+OKi3ZfDn8jrqai0ZJOy4LzEcfitYLfq9bLfkJLkq8jhG5Drx8L2btos+1J+a7xfpiWUP1eRj1JN24J6fH77B3piunGNnvf3YrxFpkvP2g7GKeI2ZtrdJ68zaWJPI0amefvvx7R/C4uy1t2ZtHPNNseHMlwzbr4r1XZ7mY86jm7X3cweJWw1fO/hbcZbrZmo42+DOfNa6SfSN1GPOXxJ9DYm0ast6Sf91hTGTvGP8XxFKFRratwzzdre47ktlTOaOTXk3Zpult3ze1K71a2dFw00+YhGbefK/OzSJUarajeDtylmpcL5FFSra6V1wvqlmmha12Ipq+kZqSsota2833HcRWvZybk1xz1Sby+9BXEP8PLzZWqm/wAPtisspcDNZq0eT0/V/k1OlK1qcFxy742Zi1ZK0eT/ALv8mh0vL1Ife4cX1L9zcX0S/wB6lMXBPN/1S+KgP9GYpbTimmnn+JyeWW+KPPznu8e22Y50VUtP+F+Qpu0Zxupp2eklXS3o8r0k49ZPN3u9yt33DGTbnJuzd17lql3GbUlmyOtBnzbrg0sLi9lOKvaStZtWTds9OwjGKytcQpTzQ3Grw++BqN+hOMnqMYqnnfio9m5biqMfUf6o/CRCvUd3d3yXwQRn6j/VH4SNNtWCvXkqr6vmLVdO/wAhiq83zF6unec02EuwlUKmW1CpkJEi6KGaS7RSIxTYkA7TpriNQpq1ridJDEea+/cUTCxunSS0k0ShQit/gJdZ2+P0LoVY75S+/eUTHu/YZVCPtfA76PDXafgKTrLdf3s7HELg+/6GrQbv2H6aUdJvwISpQ3yfhvEXXzOyxV9yC0PdjypQ9t59iOqnD233IR9KenkjqxDW9mrQtmafWP25fyo51V/zz0EIVm95Ztszwb8yXqxt4ZPWT8PmddBXb234C1Od96XvORrR3vuGqE5jdrO6qPx3EVFb2+Gn1Fnio8PEg8bwsh2hW2PwgrWUbvjZfDMjVgpPana/O2++i5mbPGt6sr9K5g5Gexr1OqWaV3q9bffuBVoewvEyfSl9slHEr7ZNsopo0VODWjXvv8SDo028nn2tr6CCxS+2QeJXb3moypmZStGlUwqssslpndZ6i7w8fdy87lMMa1o2iyOOT/Ek/BlNyXJY7WSTStb8t9PecdGD32147+byIucHo7Pt+ZXUi128nce4JjWxB65293jftDqYfaf/AKEJTsR60zZtSY/KjDLwyl8yGIV9mMX6t7u9+zixPrg9Kd73d+Y1koG20OvD0/a++8nSpQWalu+95nrFO9/jZnPSc75eXgLdBtI05U4cWm3fJu2fKQtUwNNu7bz5+bFZ4i+63K/mS9IjbR9/0DZC2fsXrA01vfc/mSlhqfH4/MR67tdu8v65W/G/f/kFJBvXoWejx9q/NP5neoja19bPR7r9vaJ+kNPJk1Nyzuu9IHOw3J1MPHj4fUSxEEt423Ls8H8BHESOebHtYjUZWWVCtkWwJxZfBi0S1MAGo1DvWiu0G0bToY11p1VRTaLINb2PYVjHWHdsp62PAPSeCQ9hWWOodhUFp1m9SG0GwzWhKK1l3HKleO65l9YG2GwqNGni7aHamOb3mZththsMe9IDrxHbO7YbjHevITxAq5kLi2BsvlUb3X99gT/d8SjIMgsyXqX7q7yW32LvF8gyFYF8ZfurvIyf7viVKxzILAtUrfl/qLFWfIWyA1YDirk4YprNMQUju0G4UaVTGuWtvMthODWtuZkbR3bDYWo/Wdt9yvbFNsup4i2qQ9g7FrmQdQ65xfYU1OYtgss6w51gvtBcNjQx1odaL3OXFYhjrAVUXuFw2GM9aRlMouFxN2IjJkTsiJMZJE1JFQABY5HNogA7AntBtEACwJ7QbRAAsCe0G0QAQE9oNogAATuG0QAYE7hcgAgJXC5EAA6BwAA6STIAFgdC5wAA6duRAAJXO3IAAErhciAASud2iABYE9oNogA7AltEkysAsC0iQALAnc5ciAWBK4XIgIDrOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf//Z"
+
+/***/ },
+/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -29477,7 +29483,7 @@
 
 
 /***/ },
-/* 282 */
+/* 283 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29500,7 +29506,7 @@
 	exports.default = artists;
 
 /***/ },
-/* 283 */
+/* 284 */
 /***/ function(module, exports) {
 
 	'use strict';
