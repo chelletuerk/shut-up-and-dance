@@ -28963,15 +28963,16 @@
 	
 	var fetchArtist = exports.fetchArtist = function fetchArtist(query) {
 	  var baseUrl = 'https://api.spotify.com/';
-	  // const search = `v1/search?q=%20artist:${query}&type=album`
-	  var search = 'v1/audio-features/06AKEBrKUckW0KREUWRnvT';
-	  console.log('mike');
+	  var search = 'v1/search?q=%20artist:' + query + '&type=album';
+	  // const search = `v1/audio-features/06AKEBrKUckW0KREUWRnvT`
 	  return function (dispatch) {
-	    var headers = { 'Authorization': 'Bearer ' + window.spotifyAccessToken };
-	    fetch('' + baseUrl + search, { headers: headers }).then(function (response) {
-	      return response;
+	    // const headers = {'Authorization': 'Bearer ' + window.spotifyAccessToken }
+	    fetch('' + baseUrl + search) //, {headers})
+	    .then(function (response) {
+	      return response.json();
 	    }).then(function (json) {
-	      console.log('hey', json);
+	
+	      // console.log('hey', json);
 	      dispatch(displaySearchedArtist(query, json));
 	      // const artistId = json.body.artistId
 	      // fetch(`${baseUrl}${artistId}`)
@@ -29114,7 +29115,7 @@
 	exports.push([module.id, "@import url(https://fonts.googleapis.com/css?family=Audiowide|Julius+Sans+One);", ""]);
 	
 	// module
-	exports.push([module.id, "body {\n  background-color: white; }\n\nh1 {\n  color: red;\n  text-align: center;\n  font-family: 'Audiowide', cursive;\n  font-size: 70px; }\n\n.app-div {\n  text-decoration: none; }\n\nimg {\n  width: 18%;\n  margin: 15px;\n  border-radius: 5px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease; }\n\n::-webkit-input-placeholder {\n  font-family: 'Julius Sans One', sans-serif;\n  font-size: 35px; }\n\nimg:hover {\n  -webkit-transform: scale(1.2);\n  transform: scale(1.2); }\n\nul {\n  margin-left: 45px; }\n\nli {\n  display: initial; }\n\n.search-input {\n  height: 40px;\n  width: 60%;\n  text-align: center;\n  margin-left: 15%;\n  font-family: 'Julius Sans One', sans-serif;\n  font-size: 35px; }\n", ""]);
+	exports.push([module.id, "body {\n  background-color: black; }\n\nh1 {\n  color: red;\n  text-align: center;\n  font-family: 'Audiowide', cursive;\n  font-size: 70px; }\n\n.app-div {\n  text-decoration: none; }\n\nimg {\n  width: 18%;\n  margin: 15px;\n  border-radius: 5px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease; }\n\n::-webkit-input-placeholder {\n  font-family: 'Julius Sans One', sans-serif;\n  font-size: 35px; }\n\nimg:hover {\n  -webkit-transform: scale(1.2);\n  transform: scale(1.2); }\n\nul {\n  margin-left: 45px; }\n\nli {\n  display: initial; }\n\n.search-input {\n  height: 40px;\n  width: 60%;\n  text-align: center;\n  margin-left: 15%;\n  font-family: 'Julius Sans One', sans-serif;\n  font-size: 35px; }\n", ""]);
 	
 	// exports
 

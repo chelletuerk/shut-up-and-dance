@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>ShutUp&Dance</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 </head>
 <body>
   <div class="application"></div>
@@ -104,13 +105,17 @@
                   userProfilePlaceholder.innerHTML = userProfileTemplate(response);
 
                   $('#login').hide();
-                  $('#loggedin').show();
+                  $('#loggedin').hide();
+                  $('.search-input').show();
                 }
             });
           } else {
               // render initial screen
               $('#login').show();
               $('#loggedin').hide();
+              setTimeout(function() {
+                $('.search-input').hide();
+              }, 100)
           }
 
           document.getElementById('obtain-new-token').addEventListener('click', function() {
