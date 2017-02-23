@@ -29117,7 +29117,7 @@
 	  return _react2.default.createElement(
 	    'button',
 	    {
-	      onClick: props.handleClick, className: props.className },
+	      onClick: props.onClick, className: props.className },
 	    props.text
 	  );
 	};
