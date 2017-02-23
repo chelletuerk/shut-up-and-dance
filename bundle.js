@@ -29003,6 +29003,10 @@
 	
 	var _reactRouter = __webpack_require__(180);
 	
+	var _Button = __webpack_require__(283);
+	
+	var _Button2 = _interopRequireDefault(_Button);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -29023,21 +29027,25 @@
 	      draftMessage: ''
 	    };
 	    _this.handleSearch = _this.handleSearch.bind(_this);
+	    _this.handleClick = _this.handleClick.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(SearchArtist, [{
 	    key: 'handleSearch',
 	    value: function handleSearch(e) {
-	      var _this2 = this;
-	
-	      this.setState({ draftMessage: e.target.value }, function () {
-	        _this2.props.fetchArtist(_this2.state.draftMessage);
-	      });
+	      this.setState({ draftMessage: e.target.value });
+	      // this.props.fetchArtist(this.state.draftMessage)
 	    }
 	  }, {
-	    key: 'searchArtists',
-	    value: function searchArtists() {
+	    key: 'handleClick',
+	    value: function handleClick() {
+	      this.props.fetchArtist(this.state.draftMessage);
+	      this.setState({ draftMessage: '' });
+	    }
+	  }, {
+	    key: 'loadArtists',
+	    value: function loadArtists() {
 	      if (this.props.artists.searchedArtists) {
 	        return this.props.artists.searchedArtists.map(function (artist, i) {
 	          return artist.images[0] === null ? null : _react2.default.createElement(
@@ -29060,16 +29068,24 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'search-input' },
-	        _react2.default.createElement('input', {
-	          className: 'search-input',
-	          placeholder: 'search artists',
-	          onChange: this.handleSearch,
-	          value: this.state.draftMessage
-	        }),
 	        _react2.default.createElement(
-	          'ul',
+	          'form',
 	          null,
-	          this.searchArtists()
+	          _react2.default.createElement('input', {
+	            className: 'search-input',
+	            placeholder: 'search artists',
+	            onChange: this.handleSearch,
+	            value: this.state.draftMessage
+	          }),
+	          _react2.default.createElement(_Button2.default, {
+	            text: 'click to jam',
+	            onClick: this.handleClick
+	          }),
+	          _react2.default.createElement(
+	            'ul',
+	            null,
+	            this.loadArtists()
+	          )
 	        )
 	      );
 	    }
@@ -29477,6 +29493,33 @@
 	};
 	
 	exports.default = user;
+
+/***/ },
+/* 283 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Button = function Button(props) {
+	  return _react2.default.createElement(
+	    'button',
+	    {
+	      onClick: props.handleClick, className: props.className },
+	    props.text
+	  );
+	};
+	
+	exports.default = Button;
 
 /***/ }
 /******/ ]);
