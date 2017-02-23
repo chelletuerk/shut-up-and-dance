@@ -31,20 +31,6 @@ constructor(props) {
                 className='card'
                 key={i}>
                   <img src={`${artist.images[0].url}`} />
-                  {/* <Button
-                    className='heartBtn'
-                    text="&#9829;"
-                    handleClick={
-                      (e) => {
-                        if (e.target.id === 'favorited') {
-                          alert('You sure you wanna add this twice??')
-                          return
-                        }
-                        this.props.sendFavorite(movie, this.props.user.user)
-                        e.target.id = 'favorited'
-                      }
-                    }
-                  /> */}
                 </li>
         })
       }
@@ -64,6 +50,7 @@ constructor(props) {
         <Button
           text='click to jam'
           onClick={this.handleClick}
+          className='submitBtn'
         />
           <ul>
             {this.loadArtists()}
