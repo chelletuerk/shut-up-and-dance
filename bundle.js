@@ -83,13 +83,13 @@
 	
 	var _SearchArtistContainer2 = _interopRequireDefault(_SearchArtistContainer);
 	
-	__webpack_require__(277);
+	__webpack_require__(278);
 	
-	var _artistReducer = __webpack_require__(281);
+	var _artistReducer = __webpack_require__(282);
 	
 	var _artistReducer2 = _interopRequireDefault(_artistReducer);
 	
-	var _userReducer = __webpack_require__(282);
+	var _userReducer = __webpack_require__(283);
 	
 	var _userReducer2 = _interopRequireDefault(_userReducer);
 	
@@ -29003,6 +29003,10 @@
 	
 	var _reactRouter = __webpack_require__(180);
 	
+	var _Button = __webpack_require__(277);
+	
+	var _Button2 = _interopRequireDefault(_Button);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -29023,21 +29027,25 @@
 	      draftMessage: ''
 	    };
 	    _this.handleSearch = _this.handleSearch.bind(_this);
+	    _this.handleClick = _this.handleClick.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(SearchArtist, [{
 	    key: 'handleSearch',
 	    value: function handleSearch(e) {
-	      var _this2 = this;
-	
-	      this.setState({ draftMessage: e.target.value }, function () {
-	        _this2.props.fetchArtist(_this2.state.draftMessage);
-	      });
+	      this.setState({ draftMessage: e.target.value });
+	      // this.props.fetchArtist(this.state.draftMessage)
 	    }
 	  }, {
-	    key: 'searchArtists',
-	    value: function searchArtists() {
+	    key: 'handleClick',
+	    value: function handleClick() {
+	      this.props.fetchArtist(this.state.draftMessage);
+	      this.setState({ draftMessage: '' });
+	    }
+	  }, {
+	    key: 'loadArtists',
+	    value: function loadArtists() {
 	      if (this.props.artists.searchedArtists) {
 	        return this.props.artists.searchedArtists.map(function (artist, i) {
 	          return artist.images[0] === null ? null : _react2.default.createElement(
@@ -29060,16 +29068,25 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'search-input' },
-	        _react2.default.createElement('input', {
-	          className: 'search-input',
-	          placeholder: 'search artists',
-	          onChange: this.handleSearch,
-	          value: this.state.draftMessage
-	        }),
 	        _react2.default.createElement(
-	          'ul',
+	          'form',
 	          null,
-	          this.searchArtists()
+	          _react2.default.createElement('input', {
+	            className: 'search-input',
+	            placeholder: 'search artists',
+	            onChange: this.handleSearch,
+	            value: this.state.draftMessage
+	          }),
+	          _react2.default.createElement(_Button2.default, {
+	            text: 'click to jam',
+	            onClick: this.handleClick,
+	            className: 'submitBtn'
+	          }),
+	          _react2.default.createElement(
+	            'ul',
+	            null,
+	            this.loadArtists()
+	          )
 	        )
 	      );
 	    }
@@ -29084,13 +29101,40 @@
 /* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Button = function Button(props) {
+	  return _react2.default.createElement(
+	    'button',
+	    {
+	      onClick: props.onClick, className: props.className },
+	    props.text
+	  );
+	};
+	
+	exports.default = Button;
+
+/***/ },
+/* 278 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(278);
+	var content = __webpack_require__(279);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(280)(content, {});
+	var update = __webpack_require__(281)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -29107,10 +29151,10 @@
 	}
 
 /***/ },
-/* 278 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(279)();
+	exports = module.exports = __webpack_require__(280)();
 	// imports
 	exports.push([module.id, "@import url(https://fonts.googleapis.com/css?family=Audiowide|Julius+Sans+One);", ""]);
 	
@@ -29121,7 +29165,7 @@
 
 
 /***/ },
-/* 279 */
+/* 280 */
 /***/ function(module, exports) {
 
 	/*
@@ -29177,7 +29221,7 @@
 
 
 /***/ },
-/* 280 */
+/* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -29429,7 +29473,7 @@
 
 
 /***/ },
-/* 281 */
+/* 282 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29452,7 +29496,7 @@
 	exports.default = artists;
 
 /***/ },
-/* 282 */
+/* 283 */
 /***/ function(module, exports) {
 
 	'use strict';
