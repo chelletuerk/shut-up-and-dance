@@ -1,21 +1,48 @@
 @import url('https://fonts.googleapis.com/css?family=Audiowide|Julius+Sans+One');
 
 html {
-  background: url('./images/citySkyline.png') no-repeat center center fixed;
-
   -webkit-background-size: cover;
   background-size: cover;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility:    hidden;
+  -ms-backface-visibility:     hidden;
 }
+
 body {
-  background-color: transparent;
-  // background: url('images/citySkyline.png');
+  background-size: cover;
+  color: black;
+  z-index: -999;
+}
+
+.bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url('./images/hotChick.png') no-repeat;
+  background-size: cover;
+  z-index: -999;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility:    hidden;
+  -ms-backface-visibility:     hidden;
+  // filter: blur(1px);
 }
 
 h1 {
-  color: red;
+  color: black;
   text-align: center;
   font-family: 'Audiowide', cursive;
-  font-size: 70px;
+  font-size: 90px;
+  text-shadow: #20B2AA 0 0 10px, #FF6347 5px 5px 5px;
+}
+
+h4 {
+  color: black;
+  text-align: center;
+  font-family: 'Audiowide', cursive;
+  font-size: 30px;
+  text-shadow: #20B2AA 0 0 10px, #FF6347 5px 5px 5px;
 }
 
 .app-div {
@@ -32,10 +59,15 @@ img {
     text-align: center;
     border: 1px solid blue;
 }
+button {
+  font-size: 15px;
+}
 
 ::-webkit-input-placeholder {
   font-family: 'Julius Sans One', sans-serif;
   font-size: 35px;
+  color: #00FFFF;
+  text-shadow: #FF6347 5px 5px 5px;
 }
 
 img:hover {
@@ -53,11 +85,26 @@ li {
 }
 
 .submitButton {
-  background: white;
   // height: 40px;
   // width: 150px;
   margin-left: 14%;
   border-radius: 5px;
+  border-color: #00FFFF;
+  background: black;
+  color: #00FFFF;
+  text-shadow: #FF6347 5px 5px 5px;
+  height: 30px;
+  -webkit-transition: all 0.7s ease;
+  transition: all 0.7s ease;
+  box-shadow: 3px 2px 2px #03585e;
+}
+
+.submitButton:hover {
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  -webkit-transform:scale(1.2);
+  transform:scale(1.2);
+
 }
 
 .playBtn {
@@ -83,23 +130,53 @@ li {
    position: relative;
 }
 
+input {
+  background-color: black;
+  box-shadow: 4px 2px 2px #03585e;
+}
+
 .search-input {
   height: 60px;
   width: 60%;
   text-align: center;
   margin-left: 15%;
   font-family: 'Julius Sans One', sans-serif;
+  color: #00FFFF;
   font-size: 35px;
   border-radius: 5px;
   margin-bottom: 20px;
+  border-color: #00FFFF;
 }
 
-// a {
-//   border: solid white 2px;
-//   height: 50px;
-//   width: 150px;
-//   border-radius: 5px;
-//   background: white;
-//   color: black;
-//   font-family: 'Julius Sans One', sans-serif;
-// }
+a {
+  height: 50px;
+  width: 200px;
+  border-radius: 5px;
+  background: white;
+  color: black;
+  font-family: 'Julius Sans One', sans-serif;
+  // padding-top: 30px;
+  margin-left: 40%;
+  height: 30px;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+a:hover {
+  box-shadow: 10px 5px 5px #03585e;
+}
+
+.btn-primary {
+   background-color: black;
+   box-shadow: 4px 2px 2px #03585e;
+  -webkit-transition: all 0.7s ease;
+  transition: all 0.7s ease;
+}
+
+
+.btn-primary:hover {
+   background: black;
+   box-shadow: 10px 5px 5px #03585e;
+   -webkit-transform:scale(1.2);
+   transform:scale(1.2);
+}
