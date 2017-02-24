@@ -28769,11 +28769,31 @@
 	  }
 	
 	  _createClass(App, [{
+	    key: 'logout',
+	    value: function logout() {
+	      window.spotifyAccessToken = null;
+	      fetch('/api/logout', { method: 'POST' }).then(function (response) {
+	        console.log(response);
+	      }).catch(function (err) {
+	        console.log('error', err);
+	      });
+	      window.location.reload();
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
 	        null,
+	        _react2.default.createElement(
+	          _reactRouter.Link,
+	          { to: '/' },
+	          _react2.default.createElement(
+	            'button',
+	            { onClick: this.logout.bind(this) },
+	            'Logout'
+	          )
+	        ),
 	        _react2.default.createElement(
 	          _reactRouter.Link,
 	          { to: '/', style: { textDecoration: 'none' } },
@@ -28964,41 +28984,40 @@
 	  };
 	};
 	
+	//  export const fetchArtist = (query) => {
+	//   const baseUrl = 'https://api.spotify.com/'
+	//   const search = `v1/search?q=%20artist:${query}&type=album`
+	//   return (dispatch) => {
+	//     const headers = {'Authorization': 'Bearer ' + window.spotifyAccessToken }
+	//     fetch(`${baseUrl}${search}`, {headers})
+	//       .then(response => response.json())
+	//       .then((json) => {
+	//         dispatch(displaySearchedArtist(query, json))
+	//         console.log(json);
+	//       })
+	//       .catch(err => 'err')
+	//   }
+	// }
+	
 	var fetchArtist = exports.fetchArtist = function fetchArtist(query) {
 	  var baseUrl = 'https://api.spotify.com/';
-	  var search = 'v1/search?q=%20artist:' + query + '&type=album';
+	  var search = 'v1/search?q=' + query + '&type=artist&limit=20';
 	  return function (dispatch) {
 	    var headers = { 'Authorization': 'Bearer ' + window.spotifyAccessToken };
 	    fetch('' + baseUrl + search, { headers: headers }).then(function (response) {
 	      return response.json();
 	    }).then(function (json) {
-	      dispatch(displaySearchedArtist(query, json));
 	      console.log(json);
+	      dispatch(displaySearchedArtist(query, json));
 	    }).catch(function (err) {
 	      return 'err';
 	    });
 	  };
 	};
 	
-	//  export const fetchArtist = (query) => {
-	//   const baseUrl = 'https://api.spotify.com/'
-	//   const search = `v1/search?q=${query}&type=artist&limit=20`
-	//   return (dispatch) => {
-	//     const headers = {'Authorization': 'Bearer ' + window.spotifyAccessToken }
-	//     fetch(`${baseUrl}${search}`, {headers})
-	//       .then(response => response.json())
-	//       .then((json) => {
-	//         console.log(json);
-	//         dispatch(displaySearchedArtist(query, json))
-	//       })
-	//       .catch(err => 'err')
-	//   }
-	// }
-	
 	var fetchTopTracks = exports.fetchTopTracks = function fetchTopTracks(query, artistId) {
 	  var baseUrl = 'https://api.spotify.com/';
-	  //  const topTracks = `v1/artists/1ZwdS5xdxEREPySFridCfh/top-tracks?country=US`
-	  var topTracks = 'v1/audio-features/06AKEBrKUckW0KREUWRnvT'; //<==={artistId}
+	  var topTracks = 'v1/artists/1ZwdS5xdxEREPySFridCfh/top-tracks?country=US';
 	  return function (dispatch) {
 	    var headers = { 'Authorization': 'Bearer ' + window.spotifyAccessToken };
 	    fetch('' + baseUrl + topTracks, { headers: headers }).then(function (response) {
@@ -29075,7 +29094,7 @@
 	
 	      if (this.props.artists.searchedArtists) {
 	        return this.props.artists.searchedArtists.map(function (artist, i) {
-	          return artist.images[0] === null ? null : _react2.default.createElement(
+	          return artist.images[0] == null ? null : _react2.default.createElement(
 	            'li',
 	            {
 	              className: 'card',
@@ -29527,9 +29546,9 @@
 	  switch (action.type) {
 	    case 'SEARCHED_ARTIST':
 	      return Object.assign({}, state, {
-	        searchedArtists: action.payload.albums.items,
-	        artistId: action.payload.albums.items[0].id });
-	    // searchedArtists: action.payload.artists.items,
+	        // searchedArtists: action.payload.albums.items,
+	        // artistId: action.payload.albums.items[0].id })
+	        searchedArtists: action.payload.artists.items });
 	    // artistId: action.payload.albums.items[0].id })
 	    default:
 	      return state;

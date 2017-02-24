@@ -44,6 +44,11 @@ app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, './index.html'));
 });
 
+app.post('/api/logout', function(req, res) {
+  res.redirect('/');
+  req.session = null
+});
+
 app.get('/login', function(req, res) {
 
   var state = generateRandomString(16);
@@ -139,7 +144,7 @@ app.get('/refresh_token', function(req, res) {
   });
 });
 
-app.get('/*', function (req, res) { res.sendFile(path.join(__dirname, '/../../index.html')) })
+app.get('/*', function (req, res) { res.sendFile(path.join(__dirname, './index.html')) })
 
 app.listen(8080);
 console.log('Listening on 8080 -> woot there it is.');

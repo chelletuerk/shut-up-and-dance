@@ -26,11 +26,11 @@ constructor(props) {
       if (this.props.artists.searchedArtists) {
         return this.props.artists.searchedArtists.map((artist, i) => {
           return (
-              artist.images[0] === null) ? null : <li
+              artist.images[0] == null) ? null : <li
                 className='card'
                 key={i}>
+                  {/* <img src={`${artist.images[0].url}`} /> */}
                   <img src={`${artist.images[0].url}`} />
-                  {/* <img src={`${artist.items.images[0].url}`} /> */}
                   <Button
                     onClick={this.props.fetchTopTracks}
                     className='playBtn'

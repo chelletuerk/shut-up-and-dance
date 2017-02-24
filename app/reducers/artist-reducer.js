@@ -2,9 +2,9 @@ const artists = (state = {}, action) => {
   switch (action.type) {
     case 'SEARCHED_ARTIST':
       return Object.assign({}, state, {
-        searchedArtists: action.payload.albums.items,
-        artistId: action.payload.albums.items[0].id })
-        // searchedArtists: action.payload.artists.items,
+        // searchedArtists: action.payload.albums.items,
+        // artistId: action.payload.albums.items[0].id })
+        searchedArtists: action.payload.artists.items,})
         // artistId: action.payload.albums.items[0].id })
     default:
       return state;
