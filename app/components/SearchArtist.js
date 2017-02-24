@@ -29,10 +29,9 @@ constructor(props) {
               artist.images[0] == null) ? null : <li
                 className='card'
                 key={i}>
-                  {/* <img src={`${artist.images[0].url}`} /> */}
                   <img src={`${artist.images[0].url}`} />
                   <Button
-                    onClick={this.props.fetchTopTracks(this.props.artistId)}
+                    onClick={() => this.props.fetchTopTracks(this.props.artistId)}
                     className='playBtn'
                     text='&#9654;'
                   />
@@ -42,6 +41,8 @@ constructor(props) {
       }
 
   render() {
+    console.log(this.props);
+
     const { fetchArtist, artists, fetchTopTracks } = this.props
     return (
       <div className='search-input'>
@@ -58,7 +59,7 @@ constructor(props) {
           className='submitButton'
         />
           <ul>
-            {this.loadArtists()}
+            {this.loadArtists(this.props.artistId)}
           </ul>
       </form>
       </div>

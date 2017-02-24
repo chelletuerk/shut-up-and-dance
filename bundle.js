@@ -29110,7 +29110,9 @@
 	              key: i },
 	            _react2.default.createElement('img', { src: '' + artist.images[0].url }),
 	            _react2.default.createElement(_Button2.default, {
-	              onClick: _this2.props.fetchTopTracks(_this2.props.artistId),
+	              onClick: function onClick() {
+	                return _this2.props.fetchTopTracks(_this2.props.artistId);
+	              },
 	              className: 'playBtn',
 	              text: '\u25B6'
 	            })
@@ -29121,6 +29123,8 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      console.log(this.props);
+	
 	      var _props = this.props,
 	          fetchArtist = _props.fetchArtist,
 	          artists = _props.artists,
@@ -29146,7 +29150,7 @@
 	          _react2.default.createElement(
 	            'ul',
 	            null,
-	            this.loadArtists()
+	            this.loadArtists(this.props.artistId)
 	          )
 	        )
 	      );
