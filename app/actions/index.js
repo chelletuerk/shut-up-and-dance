@@ -30,10 +30,25 @@ export const displaySearchedArtist = (query, payload) => {
   }
 }
 
+//  export const fetchArtist = (query) => {
+//   const baseUrl = 'https://api.spotify.com/'
+//   const search = `v1/search?q=${query}&type=artist&limit=20`
+//   return (dispatch) => {
+//     const headers = {'Authorization': 'Bearer ' + window.spotifyAccessToken }
+//     fetch(`${baseUrl}${search}`, {headers})
+//       .then(response => response.json())
+//       .then((json) => {
+//         console.log(json);
+//         dispatch(displaySearchedArtist(query, json))
+//       })
+//       .catch(err => 'err')
+//   }
+// }
+
  export const fetchTopTracks = (query, artistId) => {
   const baseUrl = 'https://api.spotify.com/'
-	 const topTracks = `v1/artists/1ZwdS5xdxEREPySFridCfh/top-tracks?country=US`
-    // const search = `v1/audio-features/06AKEBrKUckW0KREUWRnvT`
+	//  const topTracks = `v1/artists/1ZwdS5xdxEREPySFridCfh/top-tracks?country=US`
+    const topTracks = `v1/audio-features/06AKEBrKUckW0KREUWRnvT`  //<==={artistId}
   return (dispatch) => {
     const headers = {'Authorization': 'Bearer ' + window.spotifyAccessToken }
     fetch(`${baseUrl}${topTracks}`, {headers})

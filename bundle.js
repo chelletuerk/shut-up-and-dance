@@ -28980,10 +28980,25 @@
 	  };
 	};
 	
+	//  export const fetchArtist = (query) => {
+	//   const baseUrl = 'https://api.spotify.com/'
+	//   const search = `v1/search?q=${query}&type=artist&limit=20`
+	//   return (dispatch) => {
+	//     const headers = {'Authorization': 'Bearer ' + window.spotifyAccessToken }
+	//     fetch(`${baseUrl}${search}`, {headers})
+	//       .then(response => response.json())
+	//       .then((json) => {
+	//         console.log(json);
+	//         dispatch(displaySearchedArtist(query, json))
+	//       })
+	//       .catch(err => 'err')
+	//   }
+	// }
+	
 	var fetchTopTracks = exports.fetchTopTracks = function fetchTopTracks(query, artistId) {
 	  var baseUrl = 'https://api.spotify.com/';
-	  var topTracks = 'v1/artists/1ZwdS5xdxEREPySFridCfh/top-tracks?country=US';
-	  // const search = `v1/audio-features/06AKEBrKUckW0KREUWRnvT`
+	  //  const topTracks = `v1/artists/1ZwdS5xdxEREPySFridCfh/top-tracks?country=US`
+	  var topTracks = 'v1/audio-features/06AKEBrKUckW0KREUWRnvT'; //<==={artistId}
 	  return function (dispatch) {
 	    var headers = { 'Authorization': 'Bearer ' + window.spotifyAccessToken };
 	    fetch('' + baseUrl + topTracks, { headers: headers }).then(function (response) {
@@ -29514,6 +29529,8 @@
 	      return Object.assign({}, state, {
 	        searchedArtists: action.payload.albums.items,
 	        artistId: action.payload.albums.items[0].id });
+	    // searchedArtists: action.payload.artists.items,
+	    // artistId: action.payload.albums.items[0].id })
 	    default:
 	      return state;
 	  }

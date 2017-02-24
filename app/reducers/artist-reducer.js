@@ -4,6 +4,8 @@ const artists = (state = {}, action) => {
       return Object.assign({}, state, {
         searchedArtists: action.payload.albums.items,
         artistId: action.payload.albums.items[0].id })
+        // searchedArtists: action.payload.artists.items,
+        // artistId: action.payload.albums.items[0].id })
     default:
       return state;
     }

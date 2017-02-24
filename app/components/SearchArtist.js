@@ -30,6 +30,7 @@ constructor(props) {
                 className='card'
                 key={i}>
                   <img src={`${artist.images[0].url}`} />
+                  {/* <img src={`${artist.items.images[0].url}`} /> */}
                   <Button
                     onClick={this.props.fetchTopTracks}
                     className='playBtn'
