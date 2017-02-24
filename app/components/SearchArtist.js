@@ -32,7 +32,7 @@ constructor(props) {
                   {/* <img src={`${artist.images[0].url}`} /> */}
                   <img src={`${artist.images[0].url}`} />
                   <Button
-                    onClick={this.props.fetchTopTracks}
+                    onClick={this.props.fetchTopTracks(this.props.artistId)}
                     className='playBtn'
                     text='&#9654;'
                   />

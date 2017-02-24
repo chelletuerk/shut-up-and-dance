@@ -28948,7 +28948,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { artists: state.artists };
+	  return { artists: state.artists, artistId: state.artists.artistId };
 	};
 	
 	var mapDispatchToProps = {
@@ -28984,6 +28984,14 @@
 	  };
 	};
 	
+	var setArtistId = exports.setArtistId = function setArtistId(query, payload) {
+	  return {
+	    type: 'SET_ARTIST_ID',
+	    query: query,
+	    payload: payload
+	  };
+	};
+	
 	//  export const fetchArtist = (query) => {
 	//   const baseUrl = 'https://api.spotify.com/'
 	//   const search = `v1/search?q=%20artist:${query}&type=album`
@@ -29009,15 +29017,16 @@
 	    }).then(function (json) {
 	      console.log(json);
 	      dispatch(displaySearchedArtist(query, json));
+	      dispatch(setArtistId(query, json));
 	    }).catch(function (err) {
 	      return 'err';
 	    });
 	  };
 	};
 	
-	var fetchTopTracks = exports.fetchTopTracks = function fetchTopTracks(query, artistId) {
+	var fetchTopTracks = exports.fetchTopTracks = function fetchTopTracks(artistId) {
 	  var baseUrl = 'https://api.spotify.com/';
-	  var topTracks = 'v1/artists/1ZwdS5xdxEREPySFridCfh/top-tracks?country=US';
+	  var topTracks = 'v1/artists/' + artistId + '/top-tracks?country=US';
 	  return function (dispatch) {
 	    var headers = { 'Authorization': 'Bearer ' + window.spotifyAccessToken };
 	    fetch('' + baseUrl + topTracks, { headers: headers }).then(function (response) {
@@ -29101,7 +29110,7 @@
 	              key: i },
 	            _react2.default.createElement('img', { src: '' + artist.images[0].url }),
 	            _react2.default.createElement(_Button2.default, {
-	              onClick: _this2.props.fetchTopTracks,
+	              onClick: _this2.props.fetchTopTracks(_this2.props.artistId),
 	              className: 'playBtn',
 	              text: '\u25B6'
 	            })
@@ -29546,10 +29555,12 @@
 	  switch (action.type) {
 	    case 'SEARCHED_ARTIST':
 	      return Object.assign({}, state, {
-	        // searchedArtists: action.payload.albums.items,
-	        // artistId: action.payload.albums.items[0].id })
-	        searchedArtists: action.payload.artists.items });
-	    // artistId: action.payload.albums.items[0].id })
+	        searchedArtists: action.payload.artists.items
+	      });
+	    case 'SET_ARTIST_ID':
+	      return Object.assign({}, state, {
+	        artistId: action.payload.artists.items[0].id
+	      });
 	    default:
 	      return state;
 	  }
