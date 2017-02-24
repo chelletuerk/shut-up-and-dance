@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { fetchArtist } from '../actions'
+import { fetchArtist, fetchTopTracks } from '../actions'
 import SearchArtist from '../components/SearchArtist'
 
 const mapStateToProps = (state) => {
@@ -8,6 +8,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   fetchArtist,
+  fetchTopTracks,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchArtist)

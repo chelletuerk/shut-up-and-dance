@@ -15,7 +15,6 @@ constructor(props) {
 
   handleSearch(e) {
     this.setState({draftMessage: e.target.value})
-      // this.props.fetchArtist(this.state.draftMessage)
   }
 
   handleClick() {
@@ -32,6 +31,7 @@ constructor(props) {
                 key={i}>
                   <img src={`${artist.images[0].url}`} />
                   <Button
+                    onClick={this.props.fetchTopTracks}
                     className='playBtn'
                     text='&#9654;'
                   />
@@ -41,7 +41,7 @@ constructor(props) {
       }
 
   render() {
-    const { fetchArtist, artists } = this.props
+    const { fetchArtist, artists, fetchTopTracks } = this.props
     return (
       <div className='search-input'>
         <form>
@@ -52,7 +52,7 @@ constructor(props) {
             value={this.state.draftMessage}
           />
         <Button
-          text='click to jam'
+          text='click for jams'
           onClick={this.handleClick}
           className='submitButton'
         />

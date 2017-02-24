@@ -24,6 +24,7 @@ module.exports = {
         {test: /\.css$/, loaders: 'style!css?module=true'},
         {test: /\.svg$/, loaders: 'file'},
         { test: /\.scss$/, loader: 'style!css!sass' },
+        {test: /\.png$/, loader: 'url-loader'}
      ]
    },
   resolve: {

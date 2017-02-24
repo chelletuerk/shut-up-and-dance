@@ -14,7 +14,7 @@
     "url": "https://github.com/turingschool-examples/react-starter-kit.git"
   },
   "node": {
-  "fs": "empty"
+    "fs": "empty"
   },
   "author": "Steve Kinney",
   "license": "MIT",
@@ -46,6 +46,7 @@
     "react-dom": "^15.1.0",
     "sass-loader": "^3.2.3",
     "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
     "webpack": "^1.14.0",
     "webpack-dev-middleware": "^1.10.1",
     "webpack-dev-server": "^1.14.1",

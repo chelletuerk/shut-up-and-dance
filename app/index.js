@@ -21,6 +21,8 @@ const store = createStore(
     user: {},
     artists: {
       searchedArtists: [],
+      artistId: null,
+      topTracks: [],
     },
   },
   composeEnhancers(applyMiddleware(thunk)),
