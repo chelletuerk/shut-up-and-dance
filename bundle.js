@@ -101,7 +101,8 @@
 	  user: {},
 	  artists: {
 	    searchedArtists: [],
-	    artistId: null
+	    artistId: null,
+	    topTracks: []
 	  }
 	}, composeEnhancers((0, _redux.applyMiddleware)(_reduxThunk2.default)));
 	
@@ -28931,7 +28932,8 @@
 	};
 	
 	var mapDispatchToProps = {
-	  fetchArtist: _actions.fetchArtist
+	  fetchArtist: _actions.fetchArtist,
+	  fetchTopTracks: _actions.fetchTopTracks
 	};
 	
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_SearchArtist2.default);
@@ -28978,20 +28980,21 @@
 	  };
 	};
 	
-	//  export const fetchArtist = (query) => {
-	//   const baseUrl = 'https://api.spotify.com/'
-	//	 const topTracks = v1/artists/{id}/top-tracks
-	//   const search = `v1/audio-features/06AKEBrKUckW0KREUWRnvT`
-	//   return (dispatch) => {
-	//     const headers = {'Authorization': 'Bearer ' + window.spotifyAccessToken }
-	//     fetch(`${baseUrl}${search}`, {headers})
-	//       .then(response => response.json())
-	//       .then((json) => {
-	//           dispatch(displaySearchedArtist(query, json))
-	//       })
-	//       .catch(err => 'err')
-	//   }
-	// }
+	var fetchTopTracks = exports.fetchTopTracks = function fetchTopTracks(query, artistId) {
+	  var baseUrl = 'https://api.spotify.com/';
+	  var topTracks = 'v1/artists/1ZwdS5xdxEREPySFridCfh/top-tracks?country=US';
+	  // const search = `v1/audio-features/06AKEBrKUckW0KREUWRnvT`
+	  return function (dispatch) {
+	    var headers = { 'Authorization': 'Bearer ' + window.spotifyAccessToken };
+	    fetch('' + baseUrl + topTracks, { headers: headers }).then(function (response) {
+	      return response.json();
+	    }).then(function (json) {
+	      dispatch(displaySearchedArtist(query, json));
+	    }).catch(function (err) {
+	      return 'err';
+	    });
+	  };
+	};
 
 /***/ },
 /* 276 */
@@ -29043,7 +29046,6 @@
 	    key: 'handleSearch',
 	    value: function handleSearch(e) {
 	      this.setState({ draftMessage: e.target.value });
-	      // this.props.fetchArtist(this.state.draftMessage)
 	    }
 	  }, {
 	    key: 'handleClick',
@@ -29054,6 +29056,8 @@
 	  }, {
 	    key: 'loadArtists',
 	    value: function loadArtists() {
+	      var _this2 = this;
+	
 	      if (this.props.artists.searchedArtists) {
 	        return this.props.artists.searchedArtists.map(function (artist, i) {
 	          return artist.images[0] === null ? null : _react2.default.createElement(
@@ -29063,6 +29067,7 @@
 	              key: i },
 	            _react2.default.createElement('img', { src: '' + artist.images[0].url }),
 	            _react2.default.createElement(_Button2.default, {
+	              onClick: _this2.props.fetchTopTracks,
 	              className: 'playBtn',
 	              text: '\u25B6'
 	            })
@@ -29075,7 +29080,8 @@
 	    value: function render() {
 	      var _props = this.props,
 	          fetchArtist = _props.fetchArtist,
-	          artists = _props.artists;
+	          artists = _props.artists,
+	          fetchTopTracks = _props.fetchTopTracks;
 	
 	      return _react2.default.createElement(
 	        'div',
