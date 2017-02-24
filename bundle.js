@@ -85,11 +85,11 @@
 	
 	__webpack_require__(278);
 	
-	var _artistReducer = __webpack_require__(282);
+	var _artistReducer = __webpack_require__(283);
 	
 	var _artistReducer2 = _interopRequireDefault(_artistReducer);
 	
-	var _userReducer = __webpack_require__(283);
+	var _userReducer = __webpack_require__(284);
 	
 	var _userReducer2 = _interopRequireDefault(_userReducer);
 	
@@ -29138,7 +29138,7 @@
 	var content = __webpack_require__(279);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(281)(content, {});
+	var update = __webpack_require__(282)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -29225,7 +29225,8 @@
 
 
 /***/ },
-/* 281 */
+/* 281 */,
+/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -29477,7 +29478,7 @@
 
 
 /***/ },
-/* 282 */
+/* 283 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29500,7 +29501,7 @@
 	exports.default = artists;
 
 /***/ },
-/* 283 */
+/* 284 */
 /***/ function(module, exports) {
 
 	'use strict';
