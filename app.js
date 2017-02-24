@@ -13,11 +13,6 @@ var client_id = 'e57daeab4cd24459a924105142807fa9';
 var client_secret =  '1ae09ed5e49048418adb956e9bc202a4'
 var redirect_uri = 'http://localhost:8080/callback'
 
-/**
- * Generates a random string containing numbers and letters
- * @param  {number} length The length of the string
- * @return {string} The generated string
- */
 var generateRandomString = function(length) {
   var text = '';
   var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -76,7 +71,6 @@ app.get('/callback', function(req, res) {
         error: 'state_mismatch'
       }));
   } else {
-    console.log('WOIJSE:FIJS:DIFJOWEIJFOPIJWOOOT')
     res.clearCookie(stateKey);
     var authOptions = {
       url: 'https://accounts.spotify.com/api/token',
@@ -121,19 +115,6 @@ app.get('/callback', function(req, res) {
     });
   }
 });
-
-
-// axios.get('/getArtists')
-// .then()
-// .catch()
-
-app.get('/getArtists', (req, res) => {
-  // your request will have the params
-  // make a spotify api call here
-  // make some variable that is the parsed response from spotify
-  // send that response back to your frontend
-  // res.send(JSON.stringify(variable));
-})
 
 app.get('/refresh_token', function(req, res) {
 

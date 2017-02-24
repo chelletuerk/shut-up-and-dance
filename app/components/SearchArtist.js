@@ -31,10 +31,14 @@ constructor(props) {
                 className='card'
                 key={i}>
                   <img src={`${artist.images[0].url}`} />
+                  <Button
+                    className='playBtn'
+                    text='&#9654;'
+                  />
                 </li>
-        })
+          })
+        }
       }
-    }
 
   render() {
     const { fetchArtist, artists } = this.props
@@ -48,9 +52,9 @@ constructor(props) {
             value={this.state.draftMessage}
           />
         <Button
-          text='click to jam'
+          text='click for jams'
           onClick={this.handleClick}
-          className='submitBtn'
+          className='submitButton'
         />
           <ul>
             {this.loadArtists()}

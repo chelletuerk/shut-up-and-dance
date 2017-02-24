@@ -18,21 +18,29 @@ export const displaySearchedArtist = (query, payload) => {
  export const fetchArtist = (query) => {
   const baseUrl = 'https://api.spotify.com/'
   const search = `v1/search?q=%20artist:${query}&type=album`
-  // const search = `v1/audio-features/06AKEBrKUckW0KREUWRnvT`
   return (dispatch) => {
-    // const headers = {'Authorization': 'Bearer ' + window.spotifyAccessToken }
-    fetch(`${baseUrl}${search}`)//, {headers})
+    const headers = {'Authorization': 'Bearer ' + window.spotifyAccessToken }
+    fetch(`${baseUrl}${search}`, {headers})
       .then(response => response.json())
       .then((json) => {
-
-        // console.log('hey', json);
         dispatch(displaySearchedArtist(query, json))
-        // const artistId = json.body.artistId
-        // fetch(`${baseUrl}${artistId}`)
-        //   .then(=>
-        //     dispatch(displaySearchedArtist(query, json))
-        //   )
+        console.log(json);
       })
       .catch(err => 'err')
   }
 }
+
+//  export const fetchArtist = (query) => {
+//   const baseUrl = 'https://api.spotify.com/'
+//	 const topTracks = v1/artists/{id}/top-tracks
+//   const search = `v1/audio-features/06AKEBrKUckW0KREUWRnvT`
+//   return (dispatch) => {
+//     const headers = {'Authorization': 'Bearer ' + window.spotifyAccessToken }
+//     fetch(`${baseUrl}${search}`, {headers})
+//       .then(response => response.json())
+//       .then((json) => {
+//           dispatch(displaySearchedArtist(query, json))
+//       })
+//       .catch(err => 'err')
+//   }
+// }
