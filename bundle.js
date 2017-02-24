@@ -100,7 +100,8 @@
 	var store = (0, _redux.createStore)((0, _redux.combineReducers)({ artists: _artistReducer2.default }), {
 	  user: {},
 	  artists: {
-	    searchedArtists: []
+	    searchedArtists: [],
+	    artistId: null
 	  }
 	}, composeEnhancers((0, _redux.applyMiddleware)(_reduxThunk2.default)));
 	
@@ -28963,36 +28964,30 @@
 	
 	var fetchArtist = exports.fetchArtist = function fetchArtist(query) {
 	  var baseUrl = 'https://api.spotify.com/';
-	  var search = 'v1/search?q=%20artist:' + query + '&type=track';
+	  var search = 'v1/search?q=%20artist:' + query + '&type=album';
 	  return function (dispatch) {
 	    var headers = { 'Authorization': 'Bearer ' + window.spotifyAccessToken };
 	    fetch('' + baseUrl + search, { headers: headers }).then(function (response) {
 	      return response.json();
 	    }).then(function (json) {
 	      dispatch(displaySearchedArtist(query, json));
+	      console.log(json);
 	    }).catch(function (err) {
 	      return 'err';
 	    });
 	  };
 	};
 	
-	//  export const fakeArtist = (query) => {
+	//  export const fetchArtist = (query) => {
 	//   const baseUrl = 'https://api.spotify.com/'
-	//   const search = `v1/search?q=%20artist:${query}&type=album`
-	//   // const search = `v1/audio-features/06AKEBrKUckW0KREUWRnvT`
+	//	 const topTracks = v1/artists/{id}/top-tracks
+	//   const search = `v1/audio-features/06AKEBrKUckW0KREUWRnvT`
 	//   return (dispatch) => {
-	//     // const headers = {'Authorization': 'Bearer ' + window.spotifyAccessToken }
-	//     fetch(`${baseUrl}${search}`)//, {headers})
+	//     const headers = {'Authorization': 'Bearer ' + window.spotifyAccessToken }
+	//     fetch(`${baseUrl}${search}`, {headers})
 	//       .then(response => response.json())
 	//       .then((json) => {
-	//
-	//         // console.log('hey', json);
-	//         dispatch(displaySearchedArtist(query, json))
-	//         // const artistId = json.body.artistId
-	//         // fetch(`${baseUrl}${artistId}`)
-	//         //   .then(=>
-	//         //     dispatch(displaySearchedArtist(query, json))
-	//         //   )
+	//           dispatch(displaySearchedArtist(query, json))
 	//       })
 	//       .catch(err => 'err')
 	//   }
@@ -29095,7 +29090,7 @@
 	            value: this.state.draftMessage
 	          }),
 	          _react2.default.createElement(_Button2.default, {
-	            text: 'click to jam',
+	            text: 'click for jams',
 	            onClick: this.handleClick,
 	            className: 'submitButton'
 	          }),
@@ -29176,7 +29171,7 @@
 	exports.push([module.id, "@import url(https://fonts.googleapis.com/css?family=Audiowide|Julius+Sans+One);", ""]);
 	
 	// module
-	exports.push([module.id, "html {\n  -webkit-background-size: cover;\n  background-size: cover;\n  -webkit-backface-visibility: hidden;\n  -moz-backface-visibility: hidden;\n  -ms-backface-visibility: hidden; }\n\nbody {\n  background-size: cover;\n  color: black;\n  z-index: -999; }\n\n.bg-image {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100vw;\n  height: 100vh;\n  background: url(" + __webpack_require__(281) + ") no-repeat;\n  background-size: cover;\n  z-index: -999;\n  -webkit-backface-visibility: hidden;\n  -moz-backface-visibility: hidden;\n  -ms-backface-visibility: hidden; }\n\nh1 {\n  color: black;\n  text-align: center;\n  font-family: 'Audiowide', cursive;\n  font-size: 90px;\n  text-shadow: #20B2AA 0 0 10px, #FF6347 5px 5px 5px; }\n\nh4 {\n  color: black;\n  text-align: center;\n  font-family: 'Audiowide', cursive;\n  font-size: 30px;\n  text-shadow: #20B2AA 0 0 10px, #FF6347 5px 5px 5px; }\n\n.app-div {\n  text-decoration: none; }\n\nimg {\n  width: 18%;\n  margin: 15px;\n  border-radius: 5px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 9;\n  text-align: center;\n  border: 1px solid blue; }\n\nbutton {\n  font-size: 15px; }\n\n::-webkit-input-placeholder {\n  font-family: 'Julius Sans One', sans-serif;\n  font-size: 35px;\n  color: #00FFFF;\n  text-shadow: #FF6347 5px 5px 5px; }\n\nimg:hover {\n  -webkit-transform: scale(1.3);\n  transform: scale(1.3); }\n\nul {\n  margin-left: 45px; }\n\nli {\n  display: initial; }\n\n.submitButton {\n  margin-left: 14%;\n  border-radius: 5px;\n  border-color: #00FFFF;\n  background: black;\n  color: #00FFFF;\n  text-shadow: #FF6347 5px 5px 5px;\n  height: 30px;\n  -webkit-transition: all 0.7s ease;\n  transition: all 0.7s ease;\n  box-shadow: 3px 2px 2px #03585e; }\n\n.submitButton:hover {\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  -webkit-transform: scale(1.2);\n  transform: scale(1.2); }\n\n.playBtn {\n  background-color: Transparent;\n  background-repeat: no-repeat;\n  border: none;\n  cursor: pointer;\n  overflow: hidden;\n  color: white;\n  margin: 49px 10px 0px -92px;\n  height: 43px;\n  position: absolute;\n  z-index: 10; }\n\n.card {\n  position: relative; }\n\ninput {\n  background-color: black;\n  box-shadow: 4px 2px 2px #03585e; }\n\n.search-input {\n  height: 60px;\n  width: 60%;\n  text-align: center;\n  margin-left: 15%;\n  font-family: 'Julius Sans One', sans-serif;\n  color: #00FFFF;\n  font-size: 35px;\n  border-radius: 5px;\n  margin-bottom: 20px;\n  border-color: #00FFFF; }\n\na {\n  height: 50px;\n  width: 200px;\n  border-radius: 5px;\n  background: white;\n  color: black;\n  font-family: 'Julius Sans One', sans-serif;\n  margin-left: 40%;\n  height: 30px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease; }\n\na:hover {\n  box-shadow: 10px 5px 5px #03585e; }\n\n.btn-primary {\n  background-color: black;\n  box-shadow: 4px 2px 2px #03585e;\n  -webkit-transition: all 0.7s ease;\n  transition: all 0.7s ease; }\n\n.btn-primary:hover {\n  background: black;\n  box-shadow: 10px 5px 5px #03585e;\n  -webkit-transform: scale(1.2);\n  transform: scale(1.2); }\n", ""]);
+	exports.push([module.id, "html {\n  -webkit-background-size: cover;\n  background-size: cover;\n  -webkit-backface-visibility: hidden;\n  -moz-backface-visibility: hidden;\n  -ms-backface-visibility: hidden; }\n\nbody {\n  background-size: cover;\n  color: black;\n  z-index: -999; }\n\n.bg-image {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100vw;\n  height: 100vh;\n  background: url(" + __webpack_require__(281) + ") no-repeat;\n  background-size: cover;\n  z-index: -999;\n  -webkit-backface-visibility: hidden;\n  -moz-backface-visibility: hidden;\n  -ms-backface-visibility: hidden; }\n\nh1 {\n  color: black;\n  text-align: center;\n  font-family: 'Audiowide', cursive;\n  font-size: 90px;\n  text-shadow: #20B2AA 0 0 10px, #FF6347 5px 5px 5px; }\n\nh4 {\n  color: black;\n  text-align: center;\n  font-family: 'Audiowide', cursive;\n  font-size: 30px;\n  text-shadow: #20B2AA 0 0 10px, #FF6347 5px 5px 5px; }\n\n.app-div {\n  text-decoration: none; }\n\nimg {\n  width: 18%;\n  margin: 15px;\n  border-radius: 5px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 9;\n  text-align: center;\n  border: 1px solid blue; }\n\nbutton {\n  font-size: 15px; }\n\n::-webkit-input-placeholder {\n  font-family: 'Julius Sans One', sans-serif;\n  font-size: 35px;\n  color: #00FFFF;\n  text-shadow: #FF6347 5px 5px 5px; }\n\nimg:hover {\n  -webkit-transform: scale(1.3);\n  transform: scale(1.3); }\n\nul {\n  margin-left: 45px; }\n\nli {\n  display: initial; }\n\n.submitButton {\n  margin-left: 14%;\n  border-radius: 5px;\n  border-color: #00FFFF;\n  background: black;\n  color: #00FFFF;\n  text-shadow: #FF6347 5px 5px 5px;\n  height: 30px;\n  -webkit-transition: all 0.7s ease;\n  transition: all 0.7s ease;\n  box-shadow: 3px 2px 2px #03585e; }\n\n.submitButton:hover {\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  -webkit-transform: scale(1.2);\n  transform: scale(1.2); }\n\n.playBtn {\n  background-color: Transparent;\n  background-repeat: no-repeat;\n  border: none;\n  cursor: pointer;\n  overflow: hidden;\n  color: white;\n  margin: 49px 10px 0px -92px;\n  height: 43px;\n  position: absolute;\n  z-index: 10; }\n\n.card {\n  position: relative; }\n\ninput {\n  background-color: black;\n  box-shadow: 4px 2px 2px #03585e; }\n\n.search-input {\n  height: 60px;\n  width: 60%;\n  text-align: center;\n  margin-left: 15%;\n  font-family: 'Julius Sans One', sans-serif;\n  color: #00FFFF;\n  font-size: 35px;\n  border-radius: 5px;\n  margin-bottom: 20px;\n  border-color: #00FFFF; }\n\na {\n  height: 50px;\n  width: 200px;\n  border-radius: 5px;\n  background: white;\n  color: black;\n  font-family: 'Julius Sans One', sans-serif;\n  margin-left: 40%;\n  height: 30px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease; }\n\na:hover {\n  box-shadow: 10px 5px 5px #03585e; }\n\n.btn-primary {\n  background-color: black;\n  box-shadow: 4px 2px 2px #03585e;\n  -webkit-transition: all 0.7s ease;\n  transition: all 0.7s ease; }\n\n.btn-primary:hover {\n  background: black;\n  box-shadow: 10px 5px 5px #03585e;\n  -webkit-transform: scale(1.2);\n  transform: scale(1.2); }\n", ""]);
 	
 	// exports
 
@@ -29510,7 +29505,9 @@
 	
 	  switch (action.type) {
 	    case 'SEARCHED_ARTIST':
-	      return Object.assign({}, state, { searchedArtists: action.payload.albums.items });
+	      return Object.assign({}, state, {
+	        searchedArtists: action.payload.albums.items,
+	        artistId: action.payload.albums.items[0].id });
 	    default:
 	      return state;
 	  }

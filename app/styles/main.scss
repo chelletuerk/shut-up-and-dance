@@ -15,7 +15,7 @@ body {
 }
 
 .bg-image {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
@@ -172,6 +172,7 @@ a:hover {
   -webkit-transition: all 0.7s ease;
   transition: all 0.7s ease;
 }
+
 
 .btn-primary:hover {
    background: black;
