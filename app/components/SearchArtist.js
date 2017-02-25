@@ -17,6 +17,16 @@ constructor(props) {
     this.setState({draftMessage: e.target.value})
   }
 
+  handleKeyPress(e) {
+
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      this.handleClick()
+    }
+    // if event is enter key
+
+  }
+
   handleClick() {
     this.props.fetchArtist(this.state.draftMessage)
     this.setState({draftMessage: ''})
@@ -46,11 +56,11 @@ constructor(props) {
     const { fetchArtist, artists, fetchTopTracks } = this.props
     return (
       <div className='search-input'>
-        <form>
           <input
             className='search-input'
             placeholder='search artists'
             onChange={this.handleSearch}
+            onKeyPress={this.handleKeyPress.bind(this)}
             value={this.state.draftMessage}
           />
         <Button
@@ -61,7 +71,6 @@ constructor(props) {
           <ul>
             {this.loadArtists(this.props.artistId)}
           </ul>
-      </form>
       </div>
     )
   }

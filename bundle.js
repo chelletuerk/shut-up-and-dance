@@ -29091,6 +29091,16 @@
 	      this.setState({ draftMessage: e.target.value });
 	    }
 	  }, {
+	    key: 'handleKeyPress',
+	    value: function handleKeyPress(e) {
+	
+	      if (e.key === 'Enter') {
+	        e.preventDefault();
+	        this.handleClick();
+	      }
+	      // if event is enter key
+	    }
+	  }, {
 	    key: 'handleClick',
 	    value: function handleClick() {
 	      this.props.fetchArtist(this.state.draftMessage);
@@ -29133,25 +29143,22 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'search-input' },
+	        _react2.default.createElement('input', {
+	          className: 'search-input',
+	          placeholder: 'search artists',
+	          onChange: this.handleSearch,
+	          onKeyPress: this.handleKeyPress.bind(this),
+	          value: this.state.draftMessage
+	        }),
+	        _react2.default.createElement(_Button2.default, {
+	          text: 'click for jams',
+	          onClick: this.handleClick,
+	          className: 'submitButton'
+	        }),
 	        _react2.default.createElement(
-	          'form',
+	          'ul',
 	          null,
-	          _react2.default.createElement('input', {
-	            className: 'search-input',
-	            placeholder: 'search artists',
-	            onChange: this.handleSearch,
-	            value: this.state.draftMessage
-	          }),
-	          _react2.default.createElement(_Button2.default, {
-	            text: 'click for jams',
-	            onClick: this.handleClick,
-	            className: 'submitButton'
-	          }),
-	          _react2.default.createElement(
-	            'ul',
-	            null,
-	            this.loadArtists(this.props.artistId)
-	          )
+	          this.loadArtists(this.props.artistId)
 	        )
 	      );
 	    }

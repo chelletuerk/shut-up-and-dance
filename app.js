@@ -1,35 +1,39 @@
 // https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow
+var keys = require('./app/secret.js');
+var client_id = keys.client_id;
+var client_secret = keys.client_secret;
+console.log(keys);
 
-const path = require('path');
-const express = require('express');
-const app = express();
-// const connect = require('connect')
-const express = require('express')
-const request = require('request');
-const querystring = require('querystring');
-const cookieParser = require('cookie-parser');
 
-import { client_id, client_secret } from '../app/secret'
-const redirect_uri = 'http://localhost:8080/callback'
 
-const generateRandomString = function(length) {
-  const text = '';
-  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+var path = require('path');
+var express = require('express');
+var app = express();
+// var connect = require('connect')
+var request = require('request');
+var querystring = require('querystring');
+var cookieParser = require('cookie-parser');
 
-  for (const i = 0; i < length; i++) {
+var redirect_uri = 'http://localhost:8080/callback'
+
+var generateRandomString = function(length) {
+  var text = '';
+  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+  for (var i = 0; i < length; i++) {
     text += possible.charAt(Math.floor(Math.random() * possible.length));
   }
   return text;
 };
 
-const stateKey = 'spotify_auth_state';
+var stateKey = 'spotify_auth_state';
 
 if (process.env.NODE_ENV !== 'production') {
-  const webpack = require('webpack');
-  const webpackDevMiddleware = require('webpack-dev-middleware');
-  const webpackHotMiddleware = require('webpack-hot-middleware');
-  const config = require('./webpack.config.js');
-  const compiler = webpack(config);
+  var webpack = require('webpack');
+  var webpackDevMiddleware = require('webpack-dev-middleware');
+  var webpackHotMiddleware = require('webpack-hot-middleware');
+  var config = require('./webpack.config.js');
+  var compiler = webpack(config);
   app.use(webpackHotMiddleware(compiler));
   app.use(webpackDevMiddleware(compiler, {
     noInfo: true,
@@ -50,25 +54,26 @@ app.post('/api/logout', function(req, res) {
 
 app.get('/login', function(req, res) {
 
-  const state = generateRandomString(16);
+  var state = generateRandomString(16);
   res.cookie(stateKey, state);
 
-  const scope = 'user-read-private user-read-email';
+  var scope = 'user-read-private user-read-email';
   res.redirect('https://accounts.spotify.com/authorize?' +
     querystring.stringify({
       response_type: 'code',
       client_id: client_id,
       scope: scope,
       redirect_uri: redirect_uri,
-      state: state
+      state: state,
+      show_dialog: false
     }));
 });
 
 app.get('/callback', function(req, res) {
 
-  const code = req.query.code || null;
-  const state = req.query.state || null;
-  const storedState = req.cookies ? req.cookies[stateKey] : null;
+  var code = req.query.code || null;
+  var state = req.query.state || null;
+  var storedState = req.cookies ? req.cookies[stateKey] : null;
   if (state === null || state !== storedState) {
     res.redirect('/#' +
       querystring.stringify({
@@ -76,7 +81,7 @@ app.get('/callback', function(req, res) {
       }));
   } else {
     res.clearCookie(stateKey);
-    const authOptions = {
+    var authOptions = {
       url: 'https://accounts.spotify.com/api/token',
       form: {
         code: code,
@@ -92,10 +97,10 @@ app.get('/callback', function(req, res) {
     request.post(authOptions, function(error, response, body) {
       if (!error && response.statusCode === 200) {
 
-        const access_token = body.access_token,
+        var access_token = body.access_token,
             refresh_token = body.refresh_token;
 
-        const options = {
+        var options = {
           url: 'https://api.spotify.com/v1/me',
           headers: { 'Authorization': 'Bearer ' + access_token },
           json: true
@@ -122,8 +127,8 @@ app.get('/callback', function(req, res) {
 
 app.get('/refresh_token', function(req, res) {
 
-  const refresh_token = req.query.refresh_token;
-  const authOptions = {
+  var refresh_token = req.query.refresh_token;
+  var authOptions = {
     url: 'https://accounts.spotify.com/api/token',
     headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
     form: {
@@ -135,7 +140,7 @@ app.get('/refresh_token', function(req, res) {
 
   request.post(authOptions, function(error, response, body) {
     if (!error && response.statusCode === 200) {
-      const access_token = body.access_token;
+      var access_token = body.access_token;
       res.send({
         'access_token': access_token
       });
