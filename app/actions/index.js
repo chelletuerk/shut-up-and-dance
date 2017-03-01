@@ -40,7 +40,7 @@ export const setArtistId = (query, payload) => {
 
  export const fetchArtist = (query) => {
   const baseUrl = 'https://api.spotify.com/'
-  const search = `v1/search?q=${query}&type=artist&limit=20`
+  const search = `v1/search?q=${query}&type=artist&limit=1`
   return (dispatch) => {
     const headers = {'Authorization': 'Bearer ' + window.spotifyAccessToken }
     fetch(`${baseUrl}${search}`, {headers})

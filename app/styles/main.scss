@@ -51,13 +51,16 @@ h4 {
 
 img {
     width: 18%;
-    margin: 15px;
+    margin: 25px;
+    margin-top: 50px;
     border-radius: 5px;
     -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
     z-index: 9;
     text-align: center;
     border: 1px solid blue;
+    height: 300px;
+    width: 300px;
 }
 button {
   font-size: 15px;
