@@ -54,8 +54,8 @@ export const setArtistUri = (payload) => {
     fetch(`${baseUrl}${topTracks}`, {headers})
       .then(response => response.json())
       .then((json) => {
-          dispatch(displaySearchedArtist(query, json))
-          dispatch(setArtistUri(json))
+        dispatch(setArtistUri(json))
+          // dispatch(displaySearchedArtist(query, json))
       })
       .catch(err => 'err')
   }

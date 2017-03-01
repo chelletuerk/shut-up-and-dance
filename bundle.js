@@ -28949,7 +28949,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { artists: state.artists, artistId: state.artists.artistId };
+	  return { artists: state.artists, artistId: state.artists.artistId, artistUri: state.artists.artistUri };
 	};
 	
 	var mapDispatchToProps = {
@@ -29025,8 +29025,8 @@
 	    fetch('' + baseUrl + topTracks, { headers: headers }).then(function (response) {
 	      return response.json();
 	    }).then(function (json) {
-	      dispatch(displaySearchedArtist(query, json));
 	      dispatch(setArtistUri(json));
+	      // dispatch(displaySearchedArtist(query, json))
 	    }).catch(function (err) {
 	      return 'err';
 	    });
@@ -29565,9 +29565,10 @@
 	      return Object.assign({}, state, {
 	        artistId: action.payload.artists.items[0].id
 	      });
-	    case 'PLAY_ARTIST':
+	    case 'SET_ARTIST_URI':
+	      console.log(action.payload);
 	      return Object.assign({}, state, {
-	        fetchTopTracks: action.payload.tracks[0].uri
+	        artistUri: action.payload.tracks[0].uri
 	      });
 	    default:
 	      return state;

@@ -66,6 +66,7 @@ constructor(props) {
           onClick={this.handleClick}
           className='submitButton'
         />
+        
           <ul>
             {this.loadArtists(this.props.artistId)}
           </ul>
