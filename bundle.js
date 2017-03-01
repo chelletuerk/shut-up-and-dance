@@ -29565,6 +29565,10 @@
 	      return Object.assign({}, state, {
 	        artistId: action.payload.artists.items[0].id
 	      });
+	    case 'PLAY_ARTIST':
+	      return Object.assign({}, state, {
+	        fetchTopTracks: action.payload.tracks[0].uri
+	      });
 	    default:
 	      return state;
 	  }
