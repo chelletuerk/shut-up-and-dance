@@ -1,16 +1,19 @@
 // https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow
+var keys = require('./app/secret.js');
+var client_id = keys.client_id;
+var client_secret = keys.client_secret;
+console.log(keys);
 
-const path = require('path');
+
+
+var path = require('path');
 var express = require('express');
 var app = express();
 // var connect = require('connect')
-var express = require('express')
 var request = require('request');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 
-var client_id = 'e57daeab4cd24459a924105142807fa9';
-var client_secret =  '1ae09ed5e49048418adb956e9bc202a4'
 var redirect_uri = 'http://localhost:8080/callback'
 
 var generateRandomString = function(length) {
@@ -26,11 +29,11 @@ var generateRandomString = function(length) {
 var stateKey = 'spotify_auth_state';
 
 if (process.env.NODE_ENV !== 'production') {
-  const webpack = require('webpack');
-  const webpackDevMiddleware = require('webpack-dev-middleware');
-  const webpackHotMiddleware = require('webpack-hot-middleware');
-  const config = require('./webpack.config.js');
-  const compiler = webpack(config);
+  var webpack = require('webpack');
+  var webpackDevMiddleware = require('webpack-dev-middleware');
+  var webpackHotMiddleware = require('webpack-hot-middleware');
+  var config = require('./webpack.config.js');
+  var compiler = webpack(config);
   app.use(webpackHotMiddleware(compiler));
   app.use(webpackDevMiddleware(compiler, {
     noInfo: true,
@@ -42,6 +45,11 @@ app.use(express.static(path.join(__dirname + './app/styles'))).use(cookieParser(
 
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, './index.html'));
+});
+
+app.post('/api/logout', function(req, res) {
+  res.redirect('/');
+  req.session = null
 });
 
 app.get('/login', function(req, res) {
@@ -56,7 +64,8 @@ app.get('/login', function(req, res) {
       client_id: client_id,
       scope: scope,
       redirect_uri: redirect_uri,
-      state: state
+      state: state,
+      show_dialog: false
     }));
 });
 
@@ -139,7 +148,7 @@ app.get('/refresh_token', function(req, res) {
   });
 });
 
-app.get('/*', function (req, res) { res.sendFile(path.join(__dirname, '/../../index.html')) })
+app.get('/*', function (req, res) { res.sendFile(path.join(__dirname, './index.html')) })
 
 app.listen(8080);
 console.log('Listening on 8080 -> woot there it is.');

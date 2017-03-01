@@ -17,6 +17,14 @@ constructor(props) {
     this.setState({draftMessage: e.target.value})
   }
 
+  handleKeyPress(e) {
+
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      this.handleClick()
+    }
+  }
+
   handleClick() {
     this.props.fetchArtist(this.state.draftMessage)
     this.setState({draftMessage: ''})
@@ -26,12 +34,12 @@ constructor(props) {
       if (this.props.artists.searchedArtists) {
         return this.props.artists.searchedArtists.map((artist, i) => {
           return (
-              artist.images[0] === null) ? null : <li
+              artist.images[0] == null) ? null : <li
                 className='card'
                 key={i}>
                   <img src={`${artist.images[0].url}`} />
                   <Button
-                    onClick={this.props.fetchTopTracks}
+                    onClick={() => this.props.fetchTopTracks(this.props.artistId)}
                     className='playBtn'
                     text='&#9654;'
                   />
@@ -41,14 +49,16 @@ constructor(props) {
       }
 
   render() {
+    console.log(this.props);
+
     const { fetchArtist, artists, fetchTopTracks } = this.props
     return (
       <div className='search-input'>
-        <form>
           <input
             className='search-input'
             placeholder='search artists'
             onChange={this.handleSearch}
+            onKeyPress={this.handleKeyPress.bind(this)}
             value={this.state.draftMessage}
           />
         <Button
@@ -57,9 +67,8 @@ constructor(props) {
           className='submitButton'
         />
           <ul>
-            {this.loadArtists()}
+            {this.loadArtists(this.props.artistId)}
           </ul>
-      </form>
       </div>
     )
   }

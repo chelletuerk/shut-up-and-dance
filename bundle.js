@@ -28769,11 +28769,31 @@
 	  }
 	
 	  _createClass(App, [{
+	    key: 'logout',
+	    value: function logout() {
+	      window.spotifyAccessToken = null;
+	      fetch('/api/logout', { method: 'POST' }).then(function (response) {
+	        console.log(response);
+	      }).catch(function (err) {
+	        console.log('error', err);
+	      });
+	      window.location.reload();
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
 	        null,
+	        _react2.default.createElement(
+	          _reactRouter.Link,
+	          { to: '/' },
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'logout', onClick: this.logout.bind(this) },
+	            'Logout'
+	          )
+	        ),
 	        _react2.default.createElement(
 	          _reactRouter.Link,
 	          { to: '/', style: { textDecoration: 'none' } },
@@ -28805,6 +28825,8 @@
 	
 	var _reactRedux = __webpack_require__(235);
 	
+	var _actions = __webpack_require__(275);
+	
 	var _Login = __webpack_require__(273);
 	
 	var _Login2 = _interopRequireDefault(_Login);
@@ -28814,12 +28836,10 @@
 	var mapStateToProps = function mapStateToProps(state) {
 	  return { user: state.user };
 	};
-	// import { fetchLogin, addUser } from '../actions'
-	
 	
 	var mapDispatchToProps = {
-	  // fetchLogin,
-	  // addUser,
+	  fetchLogin: _actions.fetchLogin,
+	  addUser: _actions.addUser
 	};
 	
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Login2.default);
@@ -28928,7 +28948,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { artists: state.artists };
+	  return { artists: state.artists, artistId: state.artists.artistId };
 	};
 	
 	var mapDispatchToProps = {
@@ -28964,26 +28984,49 @@
 	  };
 	};
 	
+	var setArtistId = exports.setArtistId = function setArtistId(query, payload) {
+	  return {
+	    type: 'SET_ARTIST_ID',
+	    query: query,
+	    payload: payload
+	  };
+	};
+	
+	//  export const fetchArtist = (query) => {
+	//   const baseUrl = 'https://api.spotify.com/'
+	//   const search = `v1/search?q=%20artist:${query}&type=album`
+	//   return (dispatch) => {
+	//     const headers = {'Authorization': 'Bearer ' + window.spotifyAccessToken }
+	//     fetch(`${baseUrl}${search}`, {headers})
+	//       .then(response => response.json())
+	//       .then((json) => {
+	//         dispatch(displaySearchedArtist(query, json))
+	//         console.log(json);
+	//       })
+	//       .catch(err => 'err')
+	//   }
+	// }
+	
 	var fetchArtist = exports.fetchArtist = function fetchArtist(query) {
 	  var baseUrl = 'https://api.spotify.com/';
-	  var search = 'v1/search?q=%20artist:' + query + '&type=album';
+	  var search = 'v1/search?q=' + query + '&type=artist&limit=1';
 	  return function (dispatch) {
 	    var headers = { 'Authorization': 'Bearer ' + window.spotifyAccessToken };
 	    fetch('' + baseUrl + search, { headers: headers }).then(function (response) {
 	      return response.json();
 	    }).then(function (json) {
-	      dispatch(displaySearchedArtist(query, json));
 	      console.log(json);
+	      dispatch(displaySearchedArtist(query, json));
+	      dispatch(setArtistId(query, json));
 	    }).catch(function (err) {
 	      return 'err';
 	    });
 	  };
 	};
 	
-	var fetchTopTracks = exports.fetchTopTracks = function fetchTopTracks(query, artistId) {
+	var fetchTopTracks = exports.fetchTopTracks = function fetchTopTracks(artistId) {
 	  var baseUrl = 'https://api.spotify.com/';
-	  var topTracks = 'v1/artists/1ZwdS5xdxEREPySFridCfh/top-tracks?country=US';
-	  // const search = `v1/audio-features/06AKEBrKUckW0KREUWRnvT`
+	  var topTracks = 'v1/artists/' + artistId + '/top-tracks?country=US';
 	  return function (dispatch) {
 	    var headers = { 'Authorization': 'Bearer ' + window.spotifyAccessToken };
 	    fetch('' + baseUrl + topTracks, { headers: headers }).then(function (response) {
@@ -29048,6 +29091,15 @@
 	      this.setState({ draftMessage: e.target.value });
 	    }
 	  }, {
+	    key: 'handleKeyPress',
+	    value: function handleKeyPress(e) {
+	
+	      if (e.key === 'Enter') {
+	        e.preventDefault();
+	        this.handleClick();
+	      }
+	    }
+	  }, {
 	    key: 'handleClick',
 	    value: function handleClick() {
 	      this.props.fetchArtist(this.state.draftMessage);
@@ -29060,14 +29112,16 @@
 	
 	      if (this.props.artists.searchedArtists) {
 	        return this.props.artists.searchedArtists.map(function (artist, i) {
-	          return artist.images[0] === null ? null : _react2.default.createElement(
+	          return artist.images[0] == null ? null : _react2.default.createElement(
 	            'li',
 	            {
 	              className: 'card',
 	              key: i },
 	            _react2.default.createElement('img', { src: '' + artist.images[0].url }),
 	            _react2.default.createElement(_Button2.default, {
-	              onClick: _this2.props.fetchTopTracks,
+	              onClick: function onClick() {
+	                return _this2.props.fetchTopTracks(_this2.props.artistId);
+	              },
 	              className: 'playBtn',
 	              text: '\u25B6'
 	            })
@@ -29078,6 +29132,8 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      console.log(this.props);
+	
 	      var _props = this.props,
 	          fetchArtist = _props.fetchArtist,
 	          artists = _props.artists,
@@ -29086,25 +29142,22 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'search-input' },
+	        _react2.default.createElement('input', {
+	          className: 'search-input',
+	          placeholder: 'search artists',
+	          onChange: this.handleSearch,
+	          onKeyPress: this.handleKeyPress.bind(this),
+	          value: this.state.draftMessage
+	        }),
+	        _react2.default.createElement(_Button2.default, {
+	          text: 'click for jams',
+	          onClick: this.handleClick,
+	          className: 'submitButton'
+	        }),
 	        _react2.default.createElement(
-	          'form',
+	          'ul',
 	          null,
-	          _react2.default.createElement('input', {
-	            className: 'search-input',
-	            placeholder: 'search artists',
-	            onChange: this.handleSearch,
-	            value: this.state.draftMessage
-	          }),
-	          _react2.default.createElement(_Button2.default, {
-	            text: 'click for jams',
-	            onClick: this.handleClick,
-	            className: 'submitButton'
-	          }),
-	          _react2.default.createElement(
-	            'ul',
-	            null,
-	            this.loadArtists()
-	          )
+	          this.loadArtists(this.props.artistId)
 	        )
 	      );
 	    }
@@ -29177,7 +29230,7 @@
 	exports.push([module.id, "@import url(https://fonts.googleapis.com/css?family=Audiowide|Julius+Sans+One);", ""]);
 	
 	// module
-	exports.push([module.id, "html {\n  -webkit-background-size: cover;\n  background-size: cover;\n  -webkit-backface-visibility: hidden;\n  -moz-backface-visibility: hidden;\n  -ms-backface-visibility: hidden; }\n\nbody {\n  background-size: cover;\n  color: black;\n  z-index: -999; }\n\n.bg-image {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100vw;\n  height: 100vh;\n  background: url(" + __webpack_require__(281) + ") no-repeat;\n  background-size: cover;\n  z-index: -999;\n  -webkit-backface-visibility: hidden;\n  -moz-backface-visibility: hidden;\n  -ms-backface-visibility: hidden; }\n\nh1 {\n  color: black;\n  text-align: center;\n  font-family: 'Audiowide', cursive;\n  font-size: 90px;\n  text-shadow: #20B2AA 0 0 10px, #FF6347 5px 5px 5px; }\n\nh4 {\n  color: black;\n  text-align: center;\n  font-family: 'Audiowide', cursive;\n  font-size: 30px;\n  text-shadow: #20B2AA 0 0 10px, #FF6347 5px 5px 5px; }\n\n.app-div {\n  text-decoration: none; }\n\nimg {\n  width: 18%;\n  margin: 15px;\n  border-radius: 5px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 9;\n  text-align: center;\n  border: 1px solid blue; }\n\nbutton {\n  font-size: 15px; }\n\n::-webkit-input-placeholder {\n  font-family: 'Julius Sans One', sans-serif;\n  font-size: 35px;\n  color: #00FFFF;\n  text-shadow: #FF6347 5px 5px 5px; }\n\nimg:hover {\n  -webkit-transform: scale(1.3);\n  transform: scale(1.3); }\n\nul {\n  margin-left: 45px; }\n\nli {\n  display: initial; }\n\n.submitButton {\n  margin-left: 14%;\n  border-radius: 5px;\n  border-color: #00FFFF;\n  background: black;\n  color: #00FFFF;\n  text-shadow: #FF6347 5px 5px 5px;\n  height: 30px;\n  -webkit-transition: all 0.7s ease;\n  transition: all 0.7s ease;\n  box-shadow: 3px 2px 2px #03585e; }\n\n.submitButton:hover {\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  -webkit-transform: scale(1.2);\n  transform: scale(1.2); }\n\n.playBtn {\n  background-color: Transparent;\n  background-repeat: no-repeat;\n  border: none;\n  cursor: pointer;\n  overflow: hidden;\n  color: white;\n  margin: 49px 10px 0px -92px;\n  height: 43px;\n  position: absolute;\n  z-index: 10; }\n\n.card {\n  position: relative; }\n\ninput {\n  background-color: black;\n  box-shadow: 4px 2px 2px #03585e; }\n\n.search-input {\n  height: 60px;\n  width: 60%;\n  text-align: center;\n  margin-left: 15%;\n  font-family: 'Julius Sans One', sans-serif;\n  color: #00FFFF;\n  font-size: 35px;\n  border-radius: 5px;\n  margin-bottom: 20px;\n  border-color: #00FFFF; }\n\na {\n  height: 50px;\n  width: 200px;\n  border-radius: 5px;\n  background: white;\n  color: black;\n  font-family: 'Julius Sans One', sans-serif;\n  margin-left: 40%;\n  height: 30px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease; }\n\na:hover {\n  box-shadow: 10px 5px 5px #03585e; }\n\n.btn-primary {\n  background-color: black;\n  box-shadow: 4px 2px 2px #03585e;\n  -webkit-transition: all 0.7s ease;\n  transition: all 0.7s ease; }\n\n.btn-primary:hover {\n  background: black;\n  box-shadow: 10px 5px 5px #03585e;\n  -webkit-transform: scale(1.2);\n  transform: scale(1.2); }\n", ""]);
+	exports.push([module.id, "html {\n  -webkit-background-size: cover;\n  background-size: cover;\n  -webkit-backface-visibility: hidden;\n  -moz-backface-visibility: hidden;\n  -ms-backface-visibility: hidden; }\n\nbody {\n  background-size: cover;\n  color: black;\n  z-index: -999; }\n\n.logout {\n  border-radius: 5px;\n  border-color: #00FFFF;\n  background: black;\n  color: #00FFFF;\n  text-shadow: #FF6347 5px 5px 5px;\n  height: 30px;\n  -webkit-transition: all 0.7s ease;\n  transition: all 0.7s ease;\n  box-shadow: 3px 2px 2px #03585e;\n  position: absolute;\n  bottom: 10px;\n  right: 10px; }\n\n.logout:hover {\n  -webkit-transform: scale(1.3);\n  transform: scale(1.3); }\n\n.bg-image {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100vw;\n  height: 100vh;\n  background: url(" + __webpack_require__(281) + ") no-repeat;\n  background-size: cover;\n  z-index: -999;\n  -webkit-backface-visibility: hidden;\n  -moz-backface-visibility: hidden;\n  -ms-backface-visibility: hidden; }\n\nh1 {\n  color: black;\n  text-align: center;\n  font-family: 'Audiowide', cursive;\n  font-size: 90px;\n  text-shadow: #20B2AA 0 0 10px, #FF6347 5px 5px 5px; }\n\nh4 {\n  color: black;\n  text-align: center;\n  font-family: 'Audiowide', cursive;\n  font-size: 30px;\n  text-shadow: #20B2AA 0 0 10px, #FF6347 5px 5px 5px; }\n\n.app-div {\n  text-decoration: none; }\n\nimg {\n  width: 18%;\n  margin: 25px;\n  margin-top: 50px;\n  border-radius: 5px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 9;\n  text-align: center;\n  border: 1px solid blue;\n  height: 300px;\n  width: 300px; }\n\nbutton {\n  font-size: 15px; }\n\n::-webkit-input-placeholder {\n  font-family: 'Julius Sans One', sans-serif;\n  font-size: 35px;\n  color: #00FFFF;\n  text-shadow: #FF6347 5px 5px 5px; }\n\nimg:hover {\n  -webkit-transform: scale(1.3);\n  transform: scale(1.3); }\n\nul {\n  margin-left: 45px; }\n\nli {\n  display: initial; }\n\n.submitButton {\n  margin-left: 14%;\n  border-radius: 5px;\n  border-color: #00FFFF;\n  background: black;\n  color: #00FFFF;\n  text-shadow: #FF6347 5px 5px 5px;\n  height: 30px;\n  -webkit-transition: all 0.7s ease;\n  transition: all 0.7s ease;\n  box-shadow: 3px 2px 2px #03585e; }\n\n.submitButton:hover {\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  -webkit-transform: scale(1.2);\n  transform: scale(1.2); }\n\n.playBtn {\n  background-color: Transparent;\n  font-size: 50px;\n  background-repeat: no-repeat;\n  border: none;\n  cursor: pointer;\n  overflow: hidden;\n  text-shadow: #FF6347 2px 2px 2px;\n  margin: 165px 10px 0px -189px;\n  height: 60px;\n  position: absolute;\n  z-index: 10; }\n\n.card {\n  position: relative; }\n\ninput {\n  background-color: black;\n  box-shadow: 4px 2px 2px #03585e; }\n\n.search-input {\n  height: 60px;\n  width: 60%;\n  text-align: center;\n  margin-left: 15%;\n  font-family: 'Julius Sans One', sans-serif;\n  color: #00FFFF;\n  font-size: 35px;\n  border-radius: 5px;\n  margin-bottom: 20px;\n  border-color: #00FFFF; }\n\na {\n  height: 50px;\n  width: 200px;\n  border-radius: 5px;\n  background: white;\n  color: black;\n  font-family: 'Julius Sans One', sans-serif;\n  margin-left: 40%;\n  height: 30px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease; }\n\na:hover {\n  box-shadow: 10px 5px 5px #03585e; }\n\n.btn-primary {\n  background-color: black;\n  box-shadow: 4px 2px 2px #03585e;\n  -webkit-transition: all 0.7s ease;\n  transition: all 0.7s ease; }\n\n.btn-primary:hover {\n  background: black;\n  box-shadow: 10px 5px 5px #03585e;\n  -webkit-transform: scale(1.2);\n  transform: scale(1.2); }\n\n@media screen and (max-width: 1015px) {\n  body {\n    background-size: cover;\n    color: black;\n    z-index: -999; }\n  .bg-image {\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100vw;\n    height: 100vh;\n    background: url(" + __webpack_require__(281) + ") no-repeat;\n    background-size: cover;\n    z-index: -999;\n    -webkit-backface-visibility: hidden;\n    -moz-backface-visibility: hidden;\n    -ms-backface-visibility: hidden; } }\n", ""]);
 	
 	// exports
 
@@ -29512,8 +29565,12 @@
 	  switch (action.type) {
 	    case 'SEARCHED_ARTIST':
 	      return Object.assign({}, state, {
-	        searchedArtists: action.payload.albums.items,
-	        artistId: action.payload.albums.items[0].id });
+	        searchedArtists: action.payload.artists.items
+	      });
+	    case 'SET_ARTIST_ID':
+	      return Object.assign({}, state, {
+	        artistId: action.payload.artists.items[0].id
+	      });
 	    default:
 	      return state;
 	  }

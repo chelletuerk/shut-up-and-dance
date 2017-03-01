@@ -3,7 +3,7 @@ import { fetchArtist, fetchTopTracks } from '../actions'
 import SearchArtist from '../components/SearchArtist'
 
 const mapStateToProps = (state) => {
-  return { artists: state.artists }
+  return { artists: state.artists, artistId: state.artists.artistId }
 }
 
 const mapDispatchToProps = {
