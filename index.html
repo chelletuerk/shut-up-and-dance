@@ -58,10 +58,6 @@
     <script>
       (function() {
 
-        /**
-         * Obtains parameters from the hash of the URL
-         * @return Object
-         */
         function getHashParams() {
           var hashParams = {};
           var e, r = /([^&;=]+)=?([^&;]*)/g,
@@ -90,14 +86,11 @@
           alert('There was an error during the authentication');
         } else {
           if (access_token) {
-            // render oauth info
             oauthPlaceholder.innerHTML = oauthTemplate({
               access_token: access_token,
               refresh_token: refresh_token
             });
 
-            // Provide this access token to react in a better way
-            // than putting it on the window - MP
             window.spotifyAccessToken = access_token
 
             $.ajax({
@@ -114,10 +107,11 @@
                 }
             });
           } else {
-              // render initial screen
               $('#login').show();
+              $('.search-input').hide();
               $('#loggedin').hide();
               setTimeout(function() {
+                $('.logout').hide();
                 $('.search-input').hide();
               }, 100)
           }

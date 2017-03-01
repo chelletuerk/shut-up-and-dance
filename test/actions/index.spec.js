@@ -50,21 +50,4 @@ describe('actions', () => {
     }
     expect(actions.displaySearchedArtist(query, payload)).to.deep.equal(expectedAction)
   })
-
-  it('should create an action for a user to display searched movies', () => {
-    const query = 'Crash'
-    const payload = ['Crash', 'Crash']
-    const expectedAction = {
-      type: 'SEARCHED_MOVIE',
-      query: 'Crash',
-      payload: ['Crash', 'Crash'],
-    }
-    expect(actions.displaySearchedMovie(query, payload)).to.deep.equal(expectedAction)
-  })
-
-  it('should alert user if they try to add a favorite without logging in', () => {
-    const movie = 'Crash'
-    const user = false
-    expect(actions.sendFavorite(movie, user)).to.deep.equal('you must login to add favorites')
-  })
 })

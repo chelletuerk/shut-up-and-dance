@@ -10,13 +10,13 @@ export default class App extends Component {
     }).catch((err) => {
       console.log('error', err);
     })
-    window.location.reload(); 
+    window.location.reload();
   }
 
   render() {
     return (
       <div>
-        <Link to='/'><button onClick={this.logout.bind(this)}>Logout</button></Link>
+        <Link to='/'><button className='logout' onClick={this.logout.bind(this)}>Logout</button></Link>
         <Link to="/" style={{ textDecoration: 'none' }}><h1 className='header-title'>ShutUp&Dance</h1></Link>
         {this.props.children}
       </div>

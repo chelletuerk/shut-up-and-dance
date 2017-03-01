@@ -23,8 +23,6 @@ constructor(props) {
       e.preventDefault()
       this.handleClick()
     }
-    // if event is enter key
-
   }
 
   handleClick() {
