@@ -49,7 +49,7 @@ constructor(props) {
       }
 
   render() {
-    console.log(this.props);
+    // console.log(this.props);
 
     const { fetchArtist, artists, fetchTopTracks } = this.props
     return (
