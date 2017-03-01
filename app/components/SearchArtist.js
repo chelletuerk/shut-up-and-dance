@@ -67,7 +67,6 @@ constructor(props) {
   }
 
   loadTracks() {
-    console.log("LOADTRACKS", this.state.display);
     let display = this.state.display.map((track, i) => {
       return track
     })

@@ -97,7 +97,7 @@
 	
 	var composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || _redux.compose;
 	
-	var store = (0, _redux.createStore)((0, _redux.combineReducers)({ artists: _artistReducer2.default }), {
+	var store = (0, _redux.createStore)((0, _redux.combineReducers)({ artists: _artistReducer2.default, user: _userReducer2.default }), {
 	  user: {},
 	  artists: {
 	    searchedArtists: [],
@@ -29152,7 +29152,6 @@
 	  }, {
 	    key: 'loadTracks',
 	    value: function loadTracks() {
-	      console.log("LOADTRACKS", this.state.display);
 	      var display = this.state.display.map(function (track, i) {
 	        return track;
 	      });
@@ -29603,11 +29602,6 @@
 	      return Object.assign({}, state, {
 	        artistId: action.payload.artists.items[0].id
 	      });
-	    // case 'TOP_TRACKS':
-	    // console.log(action.payload);
-	    //   return Object.assign({}, state, {
-	    //     topTracks: action.payload.tracks,
-	    //   })
 	    case 'SET_ARTIST_URI':
 	      return Object.assign({}, state, {
 	        artistUri: action.payload.tracks.map(function (track) {
