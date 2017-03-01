@@ -59,7 +59,14 @@ constructor(props) {
     this.props.fetchTopTracks(this.props.artistId)
       .then(() => {
         let display = this.props.artistUri.map((track, i) => {
-          return <iframe key={i} src={`https://embed.spotify.com/?uri=${track}`}></iframe>
+          return (
+            <iframe
+              key={i}
+              src={`https://embed.spotify.com/?uri=${track}`}
+              className='iframe'
+            >
+            </iframe>
+          )
         })
         this.setState({display})
         this.loadTracks();
