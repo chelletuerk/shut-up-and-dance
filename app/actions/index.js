@@ -30,6 +30,13 @@ export const setArtistUri = (payload) => {
   }
 }
 
+export const topTracks = (payload) => {
+  return{
+    type: 'TOP_TRACKS',
+    payload,
+  }
+}
+
  export const fetchArtist = (query) => {
   const baseUrl = 'https://api.spotify.com/'
   const search = `v1/search?q=${query}&type=artist&limit=1`
@@ -38,7 +45,6 @@ export const setArtistUri = (payload) => {
     fetch(`${baseUrl}${search}`, {headers})
       .then(response => response.json())
       .then((json) => {
-        console.log(json);
         dispatch(displaySearchedArtist(query, json))
         dispatch(setArtistId(query, json))
       })
@@ -54,6 +60,8 @@ export const setArtistUri = (payload) => {
     fetch(`${baseUrl}${topTracks}`, {headers})
       .then(response => response.json())
       .then((json) => {
+        console.log(json);
+        // dispatch(topTracks(json))
         dispatch(setArtistUri(json))
           // dispatch(displaySearchedArtist(query, json))
       })

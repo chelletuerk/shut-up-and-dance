@@ -102,7 +102,7 @@
 	  artists: {
 	    searchedArtists: [],
 	    artistId: null,
-	    artistUri: null,
+	    artistUri: [],
 	    topTracks: []
 	  }
 	}, composeEnhancers((0, _redux.applyMiddleware)(_reduxThunk2.default)));
@@ -28949,7 +28949,11 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { artists: state.artists, artistId: state.artists.artistId, artistUri: state.artists.artistUri };
+	  return {
+	    artists: state.artists,
+	    artistId: state.artists.artistId,
+	    topTracks: state.artists.topTracks,
+	    artistUri: state.artists.artistUri };
 	};
 	
 	var mapDispatchToProps = {
@@ -29000,6 +29004,13 @@
 	  };
 	};
 	
+	var topTracks = exports.topTracks = function topTracks(payload) {
+	  return {
+	    type: 'TOP_TRACKS',
+	    payload: payload
+	  };
+	};
+	
 	var fetchArtist = exports.fetchArtist = function fetchArtist(query) {
 	  var baseUrl = 'https://api.spotify.com/';
 	  var search = 'v1/search?q=' + query + '&type=artist&limit=1';
@@ -29008,7 +29019,6 @@
 	    fetch('' + baseUrl + search, { headers: headers }).then(function (response) {
 	      return response.json();
 	    }).then(function (json) {
-	      console.log(json);
 	      dispatch(displaySearchedArtist(query, json));
 	      dispatch(setArtistId(query, json));
 	    }).catch(function (err) {
@@ -29025,6 +29035,8 @@
 	    fetch('' + baseUrl + topTracks, { headers: headers }).then(function (response) {
 	      return response.json();
 	    }).then(function (json) {
+	      console.log(json);
+	      // dispatch(topTracks(json))
 	      dispatch(setArtistUri(json));
 	      // dispatch(displaySearchedArtist(query, json))
 	    }).catch(function (err) {
@@ -29072,7 +29084,8 @@
 	    var _this = _possibleConstructorReturn(this, (SearchArtist.__proto__ || Object.getPrototypeOf(SearchArtist)).call(this, props));
 	
 	    _this.state = {
-	      draftMessage: ''
+	      draftMessage: '',
+	      displayTracks: false
 	    };
 	    _this.handleSearch = _this.handleSearch.bind(_this);
 	    _this.handleClick = _this.handleClick.bind(_this);
@@ -29114,7 +29127,8 @@
 	            _react2.default.createElement('img', { src: '' + artist.images[0].url }),
 	            _react2.default.createElement(_Button2.default, {
 	              onClick: function onClick() {
-	                return _this2.props.fetchTopTracks(_this2.props.artistId);
+	                _this2.props.fetchTopTracks(_this2.props.artistId);
+	                _this2.setState({ displayTracks: true });
 	              },
 	              className: 'playBtn',
 	              text: '\u25B6'
@@ -29124,10 +29138,32 @@
 	      }
 	    }
 	  }, {
+	    key: 'loadTopTracks',
+	    value: function loadTopTracks() {
+	      var artist = this.props.artist;
+	      // if (this.props.artists.searchedArtists) {
+	
+	      var display = this.props.artistUri.map(function (track, i) {
+	        // return (
+	        // this.props.artist.uri == null ? null :
+	        // <li
+	        // className='card'
+	        // key={i}>
+	        return _react2.default.createElement('iframe', { key: i, src: 'https://embed.spotify.com/?uri=' + track });
+	        // </li>
+	        // )
+	      });
+	      console.log("DISPLAY", display);
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        display
+	      );
+	      // }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      // console.log(this.props);
-	
 	      var _props = this.props,
 	          fetchArtist = _props.fetchArtist,
 	          artists = _props.artists,
@@ -29151,7 +29187,8 @@
 	        _react2.default.createElement(
 	          'ul',
 	          null,
-	          this.loadArtists(this.props.artistId)
+	          this.loadArtists(),
+	          this.loadTopTracks()
 	        )
 	      );
 	    }
@@ -29565,10 +29602,16 @@
 	      return Object.assign({}, state, {
 	        artistId: action.payload.artists.items[0].id
 	      });
+	    // case 'TOP_TRACKS':
+	    // console.log(action.payload);
+	    //   return Object.assign({}, state, {
+	    //     topTracks: action.payload.tracks,
+	    //   })
 	    case 'SET_ARTIST_URI':
-	      console.log(action.payload);
 	      return Object.assign({}, state, {
-	        artistUri: action.payload.tracks[0].uri
+	        artistUri: action.payload.tracks.map(function (track) {
+	          return track.uri;
+	        })
 	      });
 	    default:
 	      return state;

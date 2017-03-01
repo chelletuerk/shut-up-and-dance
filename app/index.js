@@ -22,7 +22,7 @@ const store = createStore(
     artists: {
       searchedArtists: [],
       artistId: null,
-      artistUri: null,
+      artistUri: [],
       topTracks: [],
     },
   },
