@@ -28825,6 +28825,8 @@
 	
 	var _reactRedux = __webpack_require__(235);
 	
+	var _actions = __webpack_require__(275);
+	
 	var _Login = __webpack_require__(273);
 	
 	var _Login2 = _interopRequireDefault(_Login);
@@ -28834,12 +28836,10 @@
 	var mapStateToProps = function mapStateToProps(state) {
 	  return { user: state.user };
 	};
-	// import { fetchLogin, addUser } from '../actions'
-	
 	
 	var mapDispatchToProps = {
-	  // fetchLogin,
-	  // addUser,
+	  fetchLogin: _actions.fetchLogin,
+	  addUser: _actions.addUser
 	};
 	
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Login2.default);

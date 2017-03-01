@@ -15,11 +15,11 @@ describe('SearchArtist', () => {
     expect(wrapper.state().draftMessage).to.deep.equal('');
   });
 
-  it('should render a list of artists on load', () => {
-    const wrapper = mount(<SearchArtist
-      artists={fakeArtists} fetchData={fetchData} />);
-    expect(wrapper.find('li')).to.have.length(3)
-  });
+  // it('should render a list of artists on load', () => {
+  //   const wrapper = mount(<SearchArtist
+  //     artists={fakeArtists} fetchData={fetchData} />);
+  //   expect(wrapper.find('li')).to.have.length(3)
+  // });
 
   it('should fetch artists from the api on load', () => {
     const wrapper = mount(<SearchArtist
