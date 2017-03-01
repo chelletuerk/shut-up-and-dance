@@ -1,4 +1,4 @@
-const playArtist = (state = {}, action) => {
+const setArtistUri = (state = {}, action) => {
   switch (action.type) {
     case 'PLAY_ARTIST':
       return Object.assign({}, state, {
@@ -9,4 +9,4 @@ const playArtist = (state = {}, action) => {
     }
   }
 
-export default playArtists
+export default setArtistUri

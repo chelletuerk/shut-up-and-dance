@@ -23,20 +23,12 @@ export const setArtistId = (query, payload) => {
   }
 }
 
-//  export const fetchArtist = (query) => {
-//   const baseUrl = 'https://api.spotify.com/'
-//   const search = `v1/search?q=%20artist:${query}&type=album`
-//   return (dispatch) => {
-//     const headers = {'Authorization': 'Bearer ' + window.spotifyAccessToken }
-//     fetch(`${baseUrl}${search}`, {headers})
-//       .then(response => response.json())
-//       .then((json) => {
-//         dispatch(displaySearchedArtist(query, json))
-//         console.log(json);
-//       })
-//       .catch(err => 'err')
-//   }
-// }
+export const setArtistUri = (payload) => {
+  return {
+    type: 'SET_ARTIST_URI',
+    payload,
+  }
+}
 
  export const fetchArtist = (query) => {
   const baseUrl = 'https://api.spotify.com/'
@@ -63,6 +55,7 @@ export const setArtistId = (query, payload) => {
       .then(response => response.json())
       .then((json) => {
           dispatch(displaySearchedArtist(query, json))
+          dispatch(setArtistUri(json))
       })
       .catch(err => 'err')
   }

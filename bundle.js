@@ -102,6 +102,7 @@
 	  artists: {
 	    searchedArtists: [],
 	    artistId: null,
+	    artistUri: null,
 	    topTracks: []
 	  }
 	}, composeEnhancers((0, _redux.applyMiddleware)(_reduxThunk2.default)));
@@ -28992,20 +28993,12 @@
 	  };
 	};
 	
-	//  export const fetchArtist = (query) => {
-	//   const baseUrl = 'https://api.spotify.com/'
-	//   const search = `v1/search?q=%20artist:${query}&type=album`
-	//   return (dispatch) => {
-	//     const headers = {'Authorization': 'Bearer ' + window.spotifyAccessToken }
-	//     fetch(`${baseUrl}${search}`, {headers})
-	//       .then(response => response.json())
-	//       .then((json) => {
-	//         dispatch(displaySearchedArtist(query, json))
-	//         console.log(json);
-	//       })
-	//       .catch(err => 'err')
-	//   }
-	// }
+	var setArtistUri = exports.setArtistUri = function setArtistUri(payload) {
+	  return {
+	    type: 'SET_ARTIST_URI',
+	    payload: payload
+	  };
+	};
 	
 	var fetchArtist = exports.fetchArtist = function fetchArtist(query) {
 	  var baseUrl = 'https://api.spotify.com/';
@@ -29033,6 +29026,7 @@
 	      return response.json();
 	    }).then(function (json) {
 	      dispatch(displaySearchedArtist(query, json));
+	      dispatch(setArtistUri(json));
 	    }).catch(function (err) {
 	      return 'err';
 	    });
@@ -29132,7 +29126,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      console.log(this.props);
+	      // console.log(this.props);
 	
 	      var _props = this.props,
 	          fetchArtist = _props.fetchArtist,
