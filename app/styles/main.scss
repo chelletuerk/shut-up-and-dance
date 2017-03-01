@@ -51,6 +51,8 @@ body {
 .iframe {
   height: 82px;
   margin: 0 5px;
+  border-radius: 5px;
+  border: 2px solid blue;
 }
 
 h1 {
@@ -83,7 +85,7 @@ img {
     transition: all 0.3s ease;
     z-index: 9;
     text-align: center;
-    border: 1px solid blue;
+    border: 2px solid blue;
     height: 300px;
     width: 300px;
 }
@@ -130,7 +132,6 @@ li {
   transition: all 0.3s ease;
   -webkit-transform:scale(1.2);
   transform:scale(1.2);
-
 }
 
 .playBtn {
@@ -148,7 +149,7 @@ li {
 }
 
 .card {
-   position: relative;
+  position: relative;
   margin-left: 5%;
 }
 

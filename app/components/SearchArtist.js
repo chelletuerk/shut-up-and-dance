@@ -15,7 +15,9 @@ constructor(props) {
 }
 
   handleSearch(e) {
-    this.setState({draftMessage: e.target.value})
+    this.setState({draftMessage: e.target.value}, () => {
+      this.setState({display: []})
+    })
   }
 
   handleKeyPress(e) {
@@ -41,8 +43,7 @@ constructor(props) {
                   <img src={`${artist.images[0].url}`} />
                   <Button
                     onClick={() => {
-                      // this.props.fetchTopTracks(this.props.artistId);
-                      this.getTracks();
+                      this.getTracks()
                       }
                     }
                     className='playBtn'
@@ -68,8 +69,8 @@ constructor(props) {
             </iframe>
           )
         })
-        this.setState({display})
-        this.loadTracks();
+        this.setState({ display })
+        this.loadTracks()
       });
   }
 
@@ -91,11 +92,11 @@ constructor(props) {
             onKeyPress={this.handleKeyPress.bind(this)}
             value={this.state.draftMessage}
           />
-        <Button
-          text='click for jams'
-          onClick={this.handleClick}
-          className='submitButton'
-        />
+          <Button
+            text='click for jams'
+            onClick={this.handleClick}
+            className='submitButton'
+          />
           <ul>
             {this.loadArtists()}
             {this.loadTracks()}
