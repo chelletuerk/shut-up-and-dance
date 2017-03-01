@@ -29032,10 +29032,9 @@
 	  var topTracks = 'v1/artists/' + artistId + '/top-tracks?country=US';
 	  return function (dispatch) {
 	    var headers = { 'Authorization': 'Bearer ' + window.spotifyAccessToken };
-	    fetch('' + baseUrl + topTracks, { headers: headers }).then(function (response) {
+	    return fetch('' + baseUrl + topTracks, { headers: headers }).then(function (response) {
 	      return response.json();
 	    }).then(function (json) {
-	      console.log(json);
 	      // dispatch(topTracks(json))
 	      dispatch(setArtistUri(json));
 	      // dispatch(displaySearchedArtist(query, json))
@@ -29085,7 +29084,7 @@
 	
 	    _this.state = {
 	      draftMessage: '',
-	      displayTracks: false
+	      display: []
 	    };
 	    _this.handleSearch = _this.handleSearch.bind(_this);
 	    _this.handleClick = _this.handleClick.bind(_this);
@@ -29127,8 +29126,8 @@
 	            _react2.default.createElement('img', { src: '' + artist.images[0].url }),
 	            _react2.default.createElement(_Button2.default, {
 	              onClick: function onClick() {
-	                _this2.props.fetchTopTracks(_this2.props.artistId);
-	                _this2.setState({ displayTracks: true });
+	                // this.props.fetchTopTracks(this.props.artistId);
+	                _this2.getTracks();
 	              },
 	              className: 'playBtn',
 	              text: '\u25B6'
@@ -29138,28 +29137,30 @@
 	      }
 	    }
 	  }, {
-	    key: 'loadTopTracks',
-	    value: function loadTopTracks() {
-	      var artist = this.props.artist;
-	      // if (this.props.artists.searchedArtists) {
+	    key: 'getTracks',
+	    value: function getTracks() {
+	      var _this3 = this;
 	
-	      var display = this.props.artistUri.map(function (track, i) {
-	        // return (
-	        // this.props.artist.uri == null ? null :
-	        // <li
-	        // className='card'
-	        // key={i}>
-	        return _react2.default.createElement('iframe', { key: i, src: 'https://embed.spotify.com/?uri=' + track });
-	        // </li>
-	        // )
+	      this.props.fetchTopTracks(this.props.artistId).then(function () {
+	        var display = _this3.props.artistUri.map(function (track, i) {
+	          return _react2.default.createElement('iframe', { key: i, src: 'https://embed.spotify.com/?uri=' + track });
+	        });
+	        _this3.setState({ display: display });
+	        _this3.loadTracks();
 	      });
-	      console.log("DISPLAY", display);
+	    }
+	  }, {
+	    key: 'loadTracks',
+	    value: function loadTracks() {
+	      console.log("LOADTRACKS", this.state.display);
+	      var display = this.state.display.map(function (track, i) {
+	        return track;
+	      });
 	      return _react2.default.createElement(
 	        'div',
 	        null,
 	        display
 	      );
-	      // }
 	    }
 	  }, {
 	    key: 'render',
@@ -29188,7 +29189,7 @@
 	          'ul',
 	          null,
 	          this.loadArtists(),
-	          this.loadTopTracks()
+	          this.loadTracks()
 	        )
 	      );
 	    }

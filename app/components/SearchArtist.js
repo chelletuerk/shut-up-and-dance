@@ -8,7 +8,7 @@ constructor(props) {
   super(props)
   this.state = {
     draftMessage: '',
-    displayTracks: false
+    display: [],
   }
   this.handleSearch = this.handleSearch.bind(this)
   this.handleClick = this.handleClick.bind(this)
@@ -41,8 +41,8 @@ constructor(props) {
                   <img src={`${artist.images[0].url}`} />
                   <Button
                     onClick={() => {
-                      this.props.fetchTopTracks(this.props.artistId);
-                      this.setState({displayTracks: true});
+                      // this.props.fetchTopTracks(this.props.artistId);
+                      this.getTracks();
                       }
                     }
                     className='playBtn'
@@ -53,23 +53,26 @@ constructor(props) {
         }
       }
 
-  loadTopTracks() {
-    const {artist} = this.props;
-      // if (this.props.artists.searchedArtists) {
+
+
+  getTracks() {
+    this.props.fetchTopTracks(this.props.artistId)
+      .then(() => {
         let display = this.props.artistUri.map((track, i) => {
-          // return (
-              // this.props.artist.uri == null ? null :
-              // <li
-                // className='card'
-                // key={i}>
-                  return <iframe key={i} src={`https://embed.spotify.com/?uri=${track}`}></iframe>
-              // </li>
-            // )
-          })
-          console.log("DISPLAY",display);
-          return <div>{display}</div>
-        // }
-      }
+          return <iframe key={i} src={`https://embed.spotify.com/?uri=${track}`}></iframe>
+        })
+        this.setState({display})
+        this.loadTracks();
+      });
+  }
+
+  loadTracks() {
+    console.log("LOADTRACKS", this.state.display);
+    let display = this.state.display.map((track, i) => {
+      return track
+    })
+    return <div>{display}</div>
+  }
 
   render() {
     const { fetchArtist, artists, fetchTopTracks } = this.props
@@ -89,7 +92,7 @@ constructor(props) {
         />
           <ul>
             {this.loadArtists()}
-            {this.loadTopTracks()}
+            {this.loadTracks()}
           </ul>
       </div>
     )
