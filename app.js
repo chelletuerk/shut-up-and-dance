@@ -151,7 +151,7 @@ app.get('/refresh_token', function(req, res) {
   });
 });
 
-app.get('/*', function (req, res) { res.sendFile(pat.join(__dirname, './index.html')) })
+app.get('/*', function (req, res) { res.sendFile(path.join(__dirname, './index.html')) })
 
 const port = process.env.PORT || 3000
 
