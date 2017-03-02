@@ -147,5 +147,7 @@ app.get('/refresh_token', function(req, res) {
 
 app.get('/*', function (req, res) { res.sendFile(path.join(__dirname, './index.html')) })
 
-app.listen(8080);
+const port = process.env.PORT || 3000
+
+app.listen(port);
 console.log('Listening on 8080 -> woot there it is.');
