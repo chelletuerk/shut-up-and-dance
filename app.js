@@ -11,7 +11,13 @@ var request = require('request');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 
-var redirect_uri = 'http://localhost:8080/callback'
+var redirect_uri;
+
+if (process.env.NODE_ENV === 'production') {
+  redirect_uri = 'https://damp-reef-10082.herokuapp.com/callback'
+} else {
+  redirect_uri = 'http://localhost:8080/callback'
+}
 
 var generateRandomString = function(length) {
   var text = '';
@@ -145,9 +151,9 @@ app.get('/refresh_token', function(req, res) {
   });
 });
 
-app.get('/*', function (req, res) { res.sendFile(path.join(__dirname, './index.html')) })
+app.get('/*', function (req, res) { res.sendFile(pat.join(__dirname, './index.html')) })
 
 const port = process.env.PORT || 3000
 
 app.listen(port);
-console.log('Listening on 8080 -> woot there it is.');
+console.log(`Listening on ${port} -> woot there it is.`);
