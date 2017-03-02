@@ -44,8 +44,8 @@ if (process.env.NODE_ENV !== 'production') {
   }));
 }
 
-app.use(express.static(path.join(__dirname + './app/styles'))).use(cookieParser());
-
+app.use(express.static('public')).use(cookieParser());
+// app.use(express.static('public'))
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, './index.html'));
 });
