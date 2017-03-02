@@ -8,13 +8,16 @@ constructor(props) {
   super(props)
   this.state = {
     draftMessage: '',
+    display: [],
   }
   this.handleSearch = this.handleSearch.bind(this)
   this.handleClick = this.handleClick.bind(this)
 }
 
   handleSearch(e) {
-    this.setState({draftMessage: e.target.value})
+    this.setState({draftMessage: e.target.value}, () => {
+      this.setState({display: []})
+    })
   }
 
   handleKeyPress(e) {
@@ -39,7 +42,10 @@ constructor(props) {
                 key={i}>
                   <img src={`${artist.images[0].url}`} />
                   <Button
-                    onClick={() => this.props.fetchTopTracks(this.props.artistId)}
+                    onClick={() => {
+                      this.getTracks()
+                      }
+                    }
                     className='playBtn'
                     text='&#9654;'
                   />
@@ -48,9 +54,34 @@ constructor(props) {
         }
       }
 
-  render() {
-    // console.log(this.props);
 
+
+  getTracks() {
+    this.props.fetchTopTracks(this.props.artistId)
+      .then(() => {
+        let display = this.props.artistUri.map((track, i) => {
+          return (
+            <iframe
+              key={i}
+              src={`https://embed.spotify.com/?uri=${track}`}
+              className='iframe'
+            >
+            </iframe>
+          )
+        })
+        this.setState({ display })
+        this.loadTracks()
+      });
+  }
+
+  loadTracks() {
+    let display = this.state.display.map((track, i) => {
+      return track
+    })
+    return <div className='iframes'>{display}</div>
+  }
+
+  render() {
     const { fetchArtist, artists, fetchTopTracks } = this.props
     return (
       <div className='search-input'>
@@ -61,13 +92,14 @@ constructor(props) {
             onKeyPress={this.handleKeyPress.bind(this)}
             value={this.state.draftMessage}
           />
-        <Button
-          text='click for jams'
-          onClick={this.handleClick}
-          className='submitButton'
-        />
+          <Button
+            text='click for jams'
+            onClick={this.handleClick}
+            className='submitButton'
+          />
           <ul>
-            {this.loadArtists(this.props.artistId)}
+            {this.loadArtists()}
+            {this.loadTracks()}
           </ul>
       </div>
     )

@@ -8,9 +8,11 @@ const artists = (state = {}, action) => {
     return Object.assign({}, state, {
       artistId: action.payload.artists.items[0].id,
     })
-    case 'PLAY_ARTIST':
+    case 'SET_ARTIST_URI':
       return Object.assign({}, state, {
-        fetchTopTracks: action.payload.tracks[0].uri,
+        artistUri: action.payload.tracks.map((track)=>{
+          return track.uri
+        }),
       })
     default:
       return state;

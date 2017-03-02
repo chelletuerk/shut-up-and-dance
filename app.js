@@ -2,9 +2,6 @@
 var keys = require('./app/secret.js');
 var client_id = keys.client_id;
 var client_secret = keys.client_secret;
-console.log(keys);
-
-
 
 var path = require('path');
 var express = require('express');

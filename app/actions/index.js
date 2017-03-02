@@ -38,7 +38,6 @@ export const setArtistUri = (payload) => {
     fetch(`${baseUrl}${search}`, {headers})
       .then(response => response.json())
       .then((json) => {
-        console.log(json);
         dispatch(displaySearchedArtist(query, json))
         dispatch(setArtistId(query, json))
       })
@@ -51,11 +50,12 @@ export const setArtistUri = (payload) => {
 	 const topTracks = `v1/artists/${artistId}/top-tracks?country=US`
   return (dispatch) => {
     const headers = {'Authorization': 'Bearer ' + window.spotifyAccessToken }
-    fetch(`${baseUrl}${topTracks}`, {headers})
+    return fetch(`${baseUrl}${topTracks}`, {headers})
       .then(response => response.json())
       .then((json) => {
-          dispatch(displaySearchedArtist(query, json))
-          dispatch(setArtistUri(json))
+        // dispatch(topTracks(json))
+        dispatch(setArtistUri(json))
+          // dispatch(displaySearchedArtist(query, json))
       })
       .catch(err => 'err')
   }

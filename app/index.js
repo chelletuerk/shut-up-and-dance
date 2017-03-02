@@ -16,13 +16,13 @@ import user from './reducers/user-reducer'
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
-  combineReducers({ artists }),
+  combineReducers({ artists, user }),
   {
     user: {},
     artists: {
       searchedArtists: [],
       artistId: null,
-      artistUri: null,
+      artistUri: [],
       topTracks: [],
     },
   },

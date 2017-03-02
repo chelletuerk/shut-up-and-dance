@@ -97,12 +97,12 @@
 	
 	var composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || _redux.compose;
 	
-	var store = (0, _redux.createStore)((0, _redux.combineReducers)({ artists: _artistReducer2.default }), {
+	var store = (0, _redux.createStore)((0, _redux.combineReducers)({ artists: _artistReducer2.default, user: _userReducer2.default }), {
 	  user: {},
 	  artists: {
 	    searchedArtists: [],
 	    artistId: null,
-	    artistUri: null,
+	    artistUri: [],
 	    topTracks: []
 	  }
 	}, composeEnhancers((0, _redux.applyMiddleware)(_reduxThunk2.default)));
@@ -28949,7 +28949,11 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { artists: state.artists, artistId: state.artists.artistId };
+	  return {
+	    artists: state.artists,
+	    artistId: state.artists.artistId,
+	    topTracks: state.artists.topTracks,
+	    artistUri: state.artists.artistUri };
 	};
 	
 	var mapDispatchToProps = {
@@ -29008,7 +29012,6 @@
 	    fetch('' + baseUrl + search, { headers: headers }).then(function (response) {
 	      return response.json();
 	    }).then(function (json) {
-	      console.log(json);
 	      dispatch(displaySearchedArtist(query, json));
 	      dispatch(setArtistId(query, json));
 	    }).catch(function (err) {
@@ -29022,11 +29025,12 @@
 	  var topTracks = 'v1/artists/' + artistId + '/top-tracks?country=US';
 	  return function (dispatch) {
 	    var headers = { 'Authorization': 'Bearer ' + window.spotifyAccessToken };
-	    fetch('' + baseUrl + topTracks, { headers: headers }).then(function (response) {
+	    return fetch('' + baseUrl + topTracks, { headers: headers }).then(function (response) {
 	      return response.json();
 	    }).then(function (json) {
-	      dispatch(displaySearchedArtist(query, json));
+	      // dispatch(topTracks(json))
 	      dispatch(setArtistUri(json));
+	      // dispatch(displaySearchedArtist(query, json))
 	    }).catch(function (err) {
 	      return 'err';
 	    });
@@ -29072,7 +29076,8 @@
 	    var _this = _possibleConstructorReturn(this, (SearchArtist.__proto__ || Object.getPrototypeOf(SearchArtist)).call(this, props));
 	
 	    _this.state = {
-	      draftMessage: ''
+	      draftMessage: '',
+	      display: []
 	    };
 	    _this.handleSearch = _this.handleSearch.bind(_this);
 	    _this.handleClick = _this.handleClick.bind(_this);
@@ -29082,7 +29087,11 @@
 	  _createClass(SearchArtist, [{
 	    key: 'handleSearch',
 	    value: function handleSearch(e) {
-	      this.setState({ draftMessage: e.target.value });
+	      var _this2 = this;
+	
+	      this.setState({ draftMessage: e.target.value }, function () {
+	        _this2.setState({ display: [] });
+	      });
 	    }
 	  }, {
 	    key: 'handleKeyPress',
@@ -29102,7 +29111,7 @@
 	  }, {
 	    key: 'loadArtists',
 	    value: function loadArtists() {
-	      var _this2 = this;
+	      var _this3 = this;
 	
 	      if (this.props.artists.searchedArtists) {
 	        return this.props.artists.searchedArtists.map(function (artist, i) {
@@ -29114,7 +29123,7 @@
 	            _react2.default.createElement('img', { src: '' + artist.images[0].url }),
 	            _react2.default.createElement(_Button2.default, {
 	              onClick: function onClick() {
-	                return _this2.props.fetchTopTracks(_this2.props.artistId);
+	                _this3.getTracks();
 	              },
 	              className: 'playBtn',
 	              text: '\u25B6'
@@ -29124,10 +29133,37 @@
 	      }
 	    }
 	  }, {
+	    key: 'getTracks',
+	    value: function getTracks() {
+	      var _this4 = this;
+	
+	      this.props.fetchTopTracks(this.props.artistId).then(function () {
+	        var display = _this4.props.artistUri.map(function (track, i) {
+	          return _react2.default.createElement('iframe', {
+	            key: i,
+	            src: 'https://embed.spotify.com/?uri=' + track,
+	            className: 'iframe'
+	          });
+	        });
+	        _this4.setState({ display: display });
+	        _this4.loadTracks();
+	      });
+	    }
+	  }, {
+	    key: 'loadTracks',
+	    value: function loadTracks() {
+	      var display = this.state.display.map(function (track, i) {
+	        return track;
+	      });
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'iframes' },
+	        display
+	      );
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      // console.log(this.props);
-	
 	      var _props = this.props,
 	          fetchArtist = _props.fetchArtist,
 	          artists = _props.artists,
@@ -29151,7 +29187,8 @@
 	        _react2.default.createElement(
 	          'ul',
 	          null,
-	          this.loadArtists(this.props.artistId)
+	          this.loadArtists(),
+	          this.loadTracks()
 	        )
 	      );
 	    }
@@ -29224,7 +29261,7 @@
 	exports.push([module.id, "@import url(https://fonts.googleapis.com/css?family=Audiowide|Julius+Sans+One);", ""]);
 	
 	// module
-	exports.push([module.id, "html {\n  -webkit-background-size: cover;\n  background-size: cover;\n  -webkit-backface-visibility: hidden;\n  -moz-backface-visibility: hidden;\n  -ms-backface-visibility: hidden; }\n\nbody {\n  background-size: cover;\n  color: black;\n  z-index: -999; }\n\n.logout {\n  border-radius: 5px;\n  border-color: #00FFFF;\n  background: black;\n  color: #00FFFF;\n  text-shadow: #FF6347 5px 5px 5px;\n  height: 30px;\n  -webkit-transition: all 0.7s ease;\n  transition: all 0.7s ease;\n  box-shadow: 3px 2px 2px #03585e;\n  position: absolute;\n  bottom: 10px;\n  right: 10px; }\n\n.logout:hover {\n  -webkit-transform: scale(1.3);\n  transform: scale(1.3); }\n\n.bg-image {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100vw;\n  height: 100vh;\n  background: url(" + __webpack_require__(281) + ") no-repeat;\n  background-size: cover;\n  z-index: -999;\n  -webkit-backface-visibility: hidden;\n  -moz-backface-visibility: hidden;\n  -ms-backface-visibility: hidden; }\n\nh1 {\n  color: black;\n  text-align: center;\n  font-family: 'Audiowide', cursive;\n  font-size: 90px;\n  text-shadow: #20B2AA 0 0 10px, #FF6347 5px 5px 5px; }\n\nh4 {\n  color: black;\n  text-align: center;\n  font-family: 'Audiowide', cursive;\n  font-size: 30px;\n  text-shadow: #20B2AA 0 0 10px, #FF6347 5px 5px 5px; }\n\n.app-div {\n  text-decoration: none; }\n\nimg {\n  width: 18%;\n  margin: 25px;\n  margin-top: 50px;\n  border-radius: 5px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 9;\n  text-align: center;\n  border: 1px solid blue;\n  height: 300px;\n  width: 300px; }\n\nbutton {\n  font-size: 15px; }\n\n::-webkit-input-placeholder {\n  font-family: 'Julius Sans One', sans-serif;\n  font-size: 35px;\n  color: #00FFFF;\n  text-shadow: #FF6347 5px 5px 5px; }\n\nimg:hover {\n  -webkit-transform: scale(1.3);\n  transform: scale(1.3); }\n\nul {\n  margin-left: 45px; }\n\nli {\n  display: initial; }\n\n.submitButton {\n  margin-left: 14%;\n  border-radius: 5px;\n  border-color: #00FFFF;\n  background: black;\n  color: #00FFFF;\n  text-shadow: #FF6347 5px 5px 5px;\n  height: 30px;\n  -webkit-transition: all 0.7s ease;\n  transition: all 0.7s ease;\n  box-shadow: 3px 2px 2px #03585e; }\n\n.submitButton:hover {\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  -webkit-transform: scale(1.2);\n  transform: scale(1.2); }\n\n.playBtn {\n  background-color: Transparent;\n  font-size: 50px;\n  background-repeat: no-repeat;\n  border: none;\n  cursor: pointer;\n  overflow: hidden;\n  text-shadow: #FF6347 2px 2px 2px;\n  margin: 165px 10px 0px -189px;\n  height: 60px;\n  position: absolute;\n  z-index: 10; }\n\n.card {\n  position: relative; }\n\ninput {\n  background-color: black;\n  box-shadow: 4px 2px 2px #03585e; }\n\n.search-input {\n  height: 60px;\n  width: 60%;\n  text-align: center;\n  margin-left: 15%;\n  font-family: 'Julius Sans One', sans-serif;\n  color: #00FFFF;\n  font-size: 35px;\n  border-radius: 5px;\n  margin-bottom: 20px;\n  border-color: #00FFFF; }\n\na {\n  height: 50px;\n  width: 200px;\n  border-radius: 5px;\n  background: white;\n  color: black;\n  font-family: 'Julius Sans One', sans-serif;\n  margin-left: 40%;\n  height: 30px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease; }\n\na:hover {\n  box-shadow: 10px 5px 5px #03585e; }\n\n.btn-primary {\n  background-color: black;\n  box-shadow: 4px 2px 2px #03585e;\n  -webkit-transition: all 0.7s ease;\n  transition: all 0.7s ease; }\n\n.btn-primary:hover {\n  background: black;\n  box-shadow: 10px 5px 5px #03585e;\n  -webkit-transform: scale(1.2);\n  transform: scale(1.2); }\n\n@media screen and (max-width: 1015px) {\n  body {\n    background-size: cover;\n    color: black;\n    z-index: -999; }\n  .bg-image {\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100vw;\n    height: 100vh;\n    background: url(" + __webpack_require__(281) + ") no-repeat;\n    background-size: cover;\n    z-index: -999;\n    -webkit-backface-visibility: hidden;\n    -moz-backface-visibility: hidden;\n    -ms-backface-visibility: hidden; } }\n", ""]);
+	exports.push([module.id, "html {\n  -webkit-background-size: cover;\n  background-size: cover;\n  -webkit-backface-visibility: hidden;\n  -moz-backface-visibility: hidden;\n  -ms-backface-visibility: hidden; }\n\nbody {\n  background-size: cover;\n  color: black;\n  z-index: -999; }\n\n.logout {\n  border-radius: 5px;\n  border-color: #00FFFF;\n  background: black;\n  color: #00FFFF;\n  text-shadow: #FF6347 5px 5px 5px;\n  height: 30px;\n  -webkit-transition: all 0.7s ease;\n  transition: all 0.7s ease;\n  box-shadow: 3px 2px 2px #03585e;\n  position: absolute;\n  top: 10px;\n  right: 10px; }\n\n.logout:hover {\n  -webkit-transform: scale(1.3);\n  transform: scale(1.3); }\n\n.bg-image {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100vw;\n  height: 100vh;\n  background: url(" + __webpack_require__(281) + ") no-repeat;\n  background-size: cover;\n  z-index: -999;\n  -webkit-backface-visibility: hidden;\n  -moz-backface-visibility: hidden;\n  -ms-backface-visibility: hidden; }\n\n.iframe {\n  height: 82px;\n  margin-left: 4%;\n  border-radius: 5px;\n  border: 2px solid blue; }\n\n.iframes {\n  margin-left: 1%; }\n\nh1 {\n  color: black;\n  text-align: center;\n  font-family: 'Audiowide', cursive;\n  font-size: 90px;\n  text-shadow: #20B2AA 0 0 10px, #FF6347 5px 5px 5px; }\n\nh4 {\n  color: black;\n  text-align: center;\n  font-family: 'Audiowide', cursive;\n  font-size: 30px;\n  text-shadow: #20B2AA 0 0 10px, #FF6347 5px 5px 5px;\n  margin-left: 1%; }\n\n.app-div {\n  text-decoration: none; }\n\nimg {\n  width: 18%;\n  margin: 25px;\n  margin-top: 50px;\n  border-radius: 5px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 9;\n  text-align: center;\n  border: 2px solid blue;\n  height: 300px;\n  width: 300px; }\n\nbutton {\n  font-size: 15px; }\n\n::-webkit-input-placeholder {\n  font-family: 'Julius Sans One', sans-serif;\n  font-size: 35px;\n  color: #00FFFF;\n  text-shadow: #FF6347 5px 5px 5px; }\n\nimg:hover {\n  -webkit-transform: scale(1.3);\n  transform: scale(1.3); }\n\nul {\n  margin-left: 45px; }\n\nli {\n  display: initial; }\n\n.submitButton {\n  margin-left: 14%;\n  border-radius: 5px;\n  border-color: #00FFFF;\n  background: black;\n  color: #00FFFF;\n  text-shadow: #FF6347 5px 5px 5px;\n  height: 30px;\n  -webkit-transition: all 0.7s ease;\n  transition: all 0.7s ease;\n  box-shadow: 3px 2px 2px #03585e; }\n\n.submitButton:hover {\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  -webkit-transform: scale(1.2);\n  transform: scale(1.2); }\n\n.playBtn {\n  background-color: Transparent;\n  font-size: 50px;\n  background-repeat: no-repeat;\n  border: none;\n  cursor: pointer;\n  overflow: hidden;\n  text-shadow: #FF6347 2px 2px 2px;\n  margin: 165px 10px 0px -189px;\n  height: 60px;\n  position: absolute;\n  z-index: 10; }\n\n.card {\n  position: relative;\n  margin-left: 5%; }\n\ninput {\n  background-color: black;\n  box-shadow: 4px 2px 2px #03585e; }\n\n.search-input {\n  height: 60px;\n  width: 60%;\n  text-align: center;\n  margin-left: 15%;\n  font-family: 'Julius Sans One', sans-serif;\n  color: #00FFFF;\n  font-size: 35px;\n  border-radius: 5px;\n  margin-bottom: 20px;\n  border-color: #00FFFF; }\n\na {\n  height: 50px;\n  width: 200px;\n  border-radius: 5px;\n  background: white;\n  color: black;\n  font-family: 'Julius Sans One', sans-serif;\n  margin-left: 40%;\n  height: 30px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease; }\n\na:hover {\n  box-shadow: 10px 5px 5px #03585e; }\n\n.btn-primary {\n  background-color: black;\n  box-shadow: 4px 2px 2px #03585e;\n  -webkit-transition: all 0.7s ease;\n  transition: all 0.7s ease; }\n\n.btn-primary:hover {\n  background: black;\n  box-shadow: 10px 5px 5px #03585e;\n  -webkit-transform: scale(1.2);\n  transform: scale(1.2); }\n\n@media screen and (max-width: 1015px) {\n  body {\n    background-size: cover;\n    color: black;\n    z-index: -999; }\n  .bg-image {\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100vw;\n    height: 100vh;\n    background: url(" + __webpack_require__(281) + ") no-repeat;\n    background-size: cover;\n    z-index: -999;\n    -webkit-backface-visibility: hidden;\n    -moz-backface-visibility: hidden;\n    -ms-backface-visibility: hidden; } }\n", ""]);
 	
 	// exports
 
@@ -29565,9 +29602,11 @@
 	      return Object.assign({}, state, {
 	        artistId: action.payload.artists.items[0].id
 	      });
-	    case 'PLAY_ARTIST':
+	    case 'SET_ARTIST_URI':
 	      return Object.assign({}, state, {
-	        fetchTopTracks: action.payload.tracks[0].uri
+	        artistUri: action.payload.tracks.map(function (track) {
+	          return track.uri;
+	        })
 	      });
 	    default:
 	      return state;
