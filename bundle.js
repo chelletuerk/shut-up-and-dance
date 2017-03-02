@@ -79,7 +79,7 @@
 	
 	var _LoginContainer2 = _interopRequireDefault(_LoginContainer);
 	
-	var _SearchArtistContainer = __webpack_require__(274);
+	var _SearchArtistContainer = __webpack_require__(275);
 	
 	var _SearchArtistContainer2 = _interopRequireDefault(_SearchArtistContainer);
 	
@@ -28826,9 +28826,9 @@
 	
 	var _reactRedux = __webpack_require__(235);
 	
-	var _actions = __webpack_require__(275);
+	var _actions = __webpack_require__(273);
 	
-	var _Login = __webpack_require__(273);
+	var _Login = __webpack_require__(274);
 	
 	var _Login2 = _interopRequireDefault(_Login);
 	
@@ -28847,6 +28847,80 @@
 
 /***/ },
 /* 273 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var signIn = exports.signIn = function signIn(email, password, user) {
+	  return {
+	    type: 'SIGN_IN',
+	    email: email,
+	    password: password,
+	    user: user
+	  };
+	};
+	
+	var displaySearchedArtist = exports.displaySearchedArtist = function displaySearchedArtist(query, payload) {
+	  return {
+	    type: 'SEARCHED_ARTIST',
+	    query: query,
+	    payload: payload
+	  };
+	};
+	
+	var setArtistId = exports.setArtistId = function setArtistId(query, payload) {
+	  return {
+	    type: 'SET_ARTIST_ID',
+	    query: query,
+	    payload: payload
+	  };
+	};
+	
+	var setArtistUri = exports.setArtistUri = function setArtistUri(payload) {
+	  return {
+	    type: 'SET_ARTIST_URI',
+	    payload: payload
+	  };
+	};
+	
+	var fetchArtist = exports.fetchArtist = function fetchArtist(query) {
+	  var baseUrl = 'https://api.spotify.com/';
+	  var search = 'v1/search?q=' + query + '&type=artist&limit=1';
+	  return function (dispatch) {
+	    var headers = { 'Authorization': 'Bearer ' + window.spotifyAccessToken };
+	    fetch('' + baseUrl + search, { headers: headers }).then(function (response) {
+	      return response.json();
+	    }).then(function (json) {
+	      dispatch(displaySearchedArtist(query, json));
+	      dispatch(setArtistId(query, json));
+	    }).catch(function (err) {
+	      return 'err';
+	    });
+	  };
+	};
+	
+	var fetchTopTracks = exports.fetchTopTracks = function fetchTopTracks(artistId) {
+	  var baseUrl = 'https://api.spotify.com/';
+	  var topTracks = 'v1/artists/' + artistId + '/top-tracks?country=US';
+	  return function (dispatch) {
+	    var headers = { 'Authorization': 'Bearer ' + window.spotifyAccessToken };
+	    return fetch('' + baseUrl + topTracks, { headers: headers }).then(function (response) {
+	      return response.json();
+	    }).then(function (json) {
+	      // dispatch(topTracks(json))
+	      dispatch(setArtistUri(json));
+	      // dispatch(displaySearchedArtist(query, json))
+	    }).catch(function (err) {
+	      return 'err';
+	    });
+	  };
+	};
+
+/***/ },
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28929,7 +29003,7 @@
 	exports.default = Login;
 
 /***/ },
-/* 274 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28940,7 +29014,7 @@
 	
 	var _reactRedux = __webpack_require__(235);
 	
-	var _actions = __webpack_require__(275);
+	var _actions = __webpack_require__(273);
 	
 	var _SearchArtist = __webpack_require__(276);
 	
@@ -28962,80 +29036,6 @@
 	};
 	
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_SearchArtist2.default);
-
-/***/ },
-/* 275 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var signIn = exports.signIn = function signIn(email, password, user) {
-	  return {
-	    type: 'SIGN_IN',
-	    email: email,
-	    password: password,
-	    user: user
-	  };
-	};
-	
-	var displaySearchedArtist = exports.displaySearchedArtist = function displaySearchedArtist(query, payload) {
-	  return {
-	    type: 'SEARCHED_ARTIST',
-	    query: query,
-	    payload: payload
-	  };
-	};
-	
-	var setArtistId = exports.setArtistId = function setArtistId(query, payload) {
-	  return {
-	    type: 'SET_ARTIST_ID',
-	    query: query,
-	    payload: payload
-	  };
-	};
-	
-	var setArtistUri = exports.setArtistUri = function setArtistUri(payload) {
-	  return {
-	    type: 'SET_ARTIST_URI',
-	    payload: payload
-	  };
-	};
-	
-	var fetchArtist = exports.fetchArtist = function fetchArtist(query) {
-	  var baseUrl = 'https://api.spotify.com/';
-	  var search = 'v1/search?q=' + query + '&type=artist&limit=1';
-	  return function (dispatch) {
-	    var headers = { 'Authorization': 'Bearer ' + window.spotifyAccessToken };
-	    fetch('' + baseUrl + search, { headers: headers }).then(function (response) {
-	      return response.json();
-	    }).then(function (json) {
-	      dispatch(displaySearchedArtist(query, json));
-	      dispatch(setArtistId(query, json));
-	    }).catch(function (err) {
-	      return 'err';
-	    });
-	  };
-	};
-	
-	var fetchTopTracks = exports.fetchTopTracks = function fetchTopTracks(artistId) {
-	  var baseUrl = 'https://api.spotify.com/';
-	  var topTracks = 'v1/artists/' + artistId + '/top-tracks?country=US';
-	  return function (dispatch) {
-	    var headers = { 'Authorization': 'Bearer ' + window.spotifyAccessToken };
-	    return fetch('' + baseUrl + topTracks, { headers: headers }).then(function (response) {
-	      return response.json();
-	    }).then(function (json) {
-	      // dispatch(topTracks(json))
-	      dispatch(setArtistUri(json));
-	      // dispatch(displaySearchedArtist(query, json))
-	    }).catch(function (err) {
-	      return 'err';
-	    });
-	  };
-	};
 
 /***/ },
 /* 276 */
