@@ -78,7 +78,7 @@ constructor(props) {
     let display = this.state.display.map((track, i) => {
       return track
     })
-    return <div>{display}</div>
+    return <div className='iframes'>{display}</div>
   }
 
   render() {

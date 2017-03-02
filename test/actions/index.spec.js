@@ -40,6 +40,15 @@ describe('actions', () => {
     expect(actions.setArtistId(query, payload)).to.deep.equal(expectedAction)
   })
 
+  it('should create an action to set artist uri', () => {
+    const payload = { somejson: 'somejson', somemorejson: 'somemorejson' }
+    const expectedAction = {
+      type: 'SET_ARTIST_URI',
+      payload: { somejson: 'somejson', somemorejson: 'somemorejson' }
+    }
+    expect(actions.displaySearchedArtist(payload)).to.deep.equal(expectedAction)
+  })
+
   it('should create an action for a user to display 1 popular artist', () => {
     const payload = { somejson: 'somejson', somemorejson: 'somemorejson' }
     const query = 'Daft Punk'

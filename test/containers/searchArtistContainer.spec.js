@@ -18,13 +18,13 @@
 //
 //   const wrapper = mount(
 //     <Provider store={fakeStore}>
-//     <SearchArtistContainer {...props}/>
+//     <SearchArtistContainer/>
 //     </Provider>
 //
 //     <SearchArtistContainer handleSubmit={props.handleSubmit} artists={props.artists} />
 //   )
 //
-//   const Component = wrapper.find(MovieIndex)
+//   const Component = wrapper.find(SearchArtist)
 //
 //   return {
 //     props,

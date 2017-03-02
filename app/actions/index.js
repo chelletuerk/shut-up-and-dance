@@ -30,13 +30,6 @@ export const setArtistUri = (payload) => {
   }
 }
 
-export const topTracks = (payload) => {
-  return{
-    type: 'TOP_TRACKS',
-    payload,
-  }
-}
-
  export const fetchArtist = (query) => {
   const baseUrl = 'https://api.spotify.com/'
   const search = `v1/search?q=${query}&type=artist&limit=1`
