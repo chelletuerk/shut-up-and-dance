@@ -6,7 +6,7 @@
     "start": "webpack && node ./app.js",
     "backend": "node ./app.js",
     "frontend": "webpack --progress --colors --watch",
-    "build": "webpack --config ./webpack.config.js",
+    "build": "webpack --config ./webpack.config.js && cp bundle.js ./public/bundle.js && rm bundle.js && rm bundle.js.map",
     "test": "mocha -w --compilers js:babel-core/register --require test/helpers/test-setup.js test/**/*.spec.js",
     "test:watch": "npm test -- --watch"
   },

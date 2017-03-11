@@ -1,4 +1,6 @@
-# React Starter Kit
+#ShutUp&Dance
+
+A small-scale version music app that allows the user to search for an artist and then provides them with their top ten tracks via Spotify's Developer API. This application utilizes React, Redux, Router, OAuth, and Express Node.
 
 To install the dependencies:
 
