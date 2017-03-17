@@ -14,7 +14,7 @@ var cookieParser = require('cookie-parser');
 var redirect_uri;
 
 if (process.env.NODE_ENV === 'production') {
-  redirect_uri = 'https://damp-reef-10082.herokuapp.com/callback'
+  redirect_uri = 'https://jet-fuel-url-shortener.herokuapp.com/'
 } else {
   redirect_uri = 'http://localhost:8080/callback'
 }
