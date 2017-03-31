@@ -8,3 +8,13 @@ machine:
   test:
     override:
       - npm run test
+
+  deployment:
+    staging:
+      branch: staging
+      heroku:
+        # appname: staging branch name in heroku
+
+  production:
+    branch: productionheroku:
+      # appname: production branch name in heroku
