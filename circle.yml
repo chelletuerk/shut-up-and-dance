@@ -4,3 +4,7 @@ machine:
 
   timezone:
     America/Denver
+
+  test:
+    override:
+      - npm run test
